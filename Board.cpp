@@ -1,4 +1,4 @@
-//Board.cpp iteration 1.1
+//Board.cpp iteration 1.2
 #include "Board.h"
 #include <iostream>
 #include <string>
@@ -8,15 +8,9 @@ using namespace std;
 
 //constructor takes in desired number of ships to play, creates board and designates number of ships to member variable.
 Board::Board(int numShips) {
-board[9][10]; // x9
-
-/*for(int i = 0; i < 10; i++) {
-board[i] = new char[10]; // y10
-}
-*/
 for(int i = 0; i < 9; i ++) {
  for(int j = 0; j < 10; j++) {
-     board[i][j] = 'X';
+     board[i][j] = '*';
     }
  }
  m_numShips = numShips;
@@ -25,7 +19,6 @@ for(int i = 0; i < 9; i ++) {
 
 //prints layout of the board.
 void Board::BoardPrint() {
-  //temp
   int counter = 9;
 for(int i = 0; i < 9; i ++) {
   cout << counter << ' ';
@@ -34,20 +27,9 @@ for(int i = 0; i < 9; i ++) {
     cout << board[i][j] << ' ';
   }
   cout << '\n';
- }
+ }  
  cout << "  A B C D E F G H I J\n";
 }
-
-/*Board::~Board() {
-    for (int i = 0; i < 9; i++){
-        board[i] = nullptr;
-        delete[] board[i];
-    }
-    board = nullptr;
-    delete[] board;     // "double free or corruption(out).
-                        //  Program recieved SIGABRT, aborted."
-};
-*/
 
 void Board::run() {
   BoardPrint();
@@ -87,48 +69,72 @@ Ship1();
 cout << "Place ship 2: ";
 int row_1;
 int col_1;
+bool flag = true;
+do{
+
 do{
   row_1 = promptRow();
   col_1 = promptCol();
  }while(checkIfX(row_1, col_1) == false);
 
-board[row_1][col_1] = 'S';
+ 
 string _direction = direction();
 
 if(_direction == "up"){
   if(row_1 != 0 && checkIfX(row_1-1, col_1) == true){
+    board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
+    flag = true;
+
   }
   else {
-    cout << "Invalid";
+    cout << "Invalid\n";
+    flag = false;
   }
  }
 else if(_direction == "down"){
   if(row_1 != 8 && checkIfX(row_1+1, col_1) == true){
+    board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
+    flag = true;
+
   }
   else {
-    cout << "Invalid";
+    cout << "Invalid\n";
+    flag = false;
   }
  }
  else if(_direction == "left"){
   if(row_1 != 0 && checkIfX(row_1, col_1-1) == true){
+    board[row_1][col_1] = 'S';
     board[row_1][col_1-1] = 'S';
+    flag = true;
+
   }
   else {
     cout << "Invalid\n";
+    flag = false;
+
   }
  }
  else if(_direction == "right"){
   if(col_1 != 9 && checkIfX(row_1, col_1+1) == true){
+    board[row_1][col_1] = 'S';
     board[row_1][col_1+1] = 'S';
+    flag = true;
+
   }
+
   else {
     cout << "Invalid\n";
+    flag = false;
+
   }
  }
-cout << "Ship placed.\n";
- BoardPrint();
+}while(flag == false);
+
+cout << "Ship 2 placed.\n\n";
+BoardPrint();
 }
 
 void Board::Ship3() {
@@ -136,127 +142,159 @@ void Board::Ship3() {
   cout << "\nPlace Ship 3: \n";
   int row_1 = promptRow();
   int col_1 = promptCol();
+  bool flag = true;
 
+do {
   while(checkIfX(row_1, col_1) == false) {
   row_1 = promptRow();
   col_1 = promptCol();
  }
 
 string _direction = direction();
-board[row_1][col_1] = 'S';
+
 
 if(_direction == "up"){
   if(row_1 >= 0 && col_1-2 >= 0){
     if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
     board[row_1-2][col_1] = 'S';
+    flag = true;
    }
   }
   else {
-    cout << "No empty spots up!";
+    cout << "No empty spots up!\n";
+    flag = false;
   }
  }
 
 else if(_direction == "down"){
  if(row_1-1 <= 8 && col_1-2 <= 8) {
    if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
     board[row_1+2][col_1] = 'S';
+    flag = true;
   }
    else {
-    cout << "No empty spots down!";
+    cout << "No empty spots down!\n";
+    flag = true;
   }
  }
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0) {
     if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1-1] = 'S';
      board[row_1][col_1-2] = 'S';
+     flag = true;
   }
   else {
-    cout << "No empty spots down!";
+    cout << "No empty spots down!\n";
+    flag = true;
   }
  }
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8) {
     if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1+1] = 'S';
      board[row_1][col_1+2] = 'S';
+     flag = true;
   }
   else {
     cout << "No Empty Spots\n";
+    flag = false;
    }
   }
  }
- cout << "Ship Placed!\n";
-    BoardPrint();
+} while (flag == false);
+ cout << "Ship 3 placed.\n";
+ BoardPrint();
 
 }
 
 void Board::Ship4() {
   Ship3();
   cout << "\nPlace ship 4: \n";
+  
   int row_1 = promptRow();
   int col_1 = promptCol();
+  bool flag = true;
 
+do {
   while(checkIfX(row_1, col_1) == false) {
   row_1 = promptRow();
   col_1 = promptCol();
  }
-board[row_1][col_1] = 'S';
+
 string _direction = direction();
 
 if(_direction == "up"){
   if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0){
     if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
     board[row_1-2][col_1] = 'S';
     board[row_1-3][col_1] = 'S';
+    flag = true;
    }
   }
   else {
     cout << "No empty spots up!\n";
+    flag = false;
   }
  }
 
 else if(_direction == "down"){
  if(row_1-1 <= 8 && row_1-2 <= 8 && row_1-3 <= 8) {
    if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
     board[row_1+2][col_1] = 'S';
     board[row_1+3][col_1] = 'S';
+    flag = true;
   }
    else {
-    cout << "No empty spots down!";
+    cout << "No empty spots down!\n";
+    flag = false;
   }
  }
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3) {
     if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1-1] = 'S';
      board[row_1][col_1-2] = 'S';
      board[row_1][col_1-3] = 'S';
+     flag = true;
   }
   else {
-    cout << "No empty spots down!";
+    cout << "no empty spots left!\n";
+    flag = false;
   }
  }
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8) {
     if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1+1] = 'S';
      board[row_1][col_1+2] = 'S';
-     board[row_1][col_1+2] = 'S';
+     board[row_1][col_1+3] = 'S';
+     flag = true;
   }
   else {
     cout << "No Empty Spots\n";
+    flag = false;
    }
   }
  }
+  } while (flag == false);
+    cout << "Ship 4 placed.\n\n";
     BoardPrint();
 
 }
@@ -267,145 +305,175 @@ void Board::Ship5() {
   cout << "\nPlace ship 5: \n";
   int row_1 = promptRow(); //initial mark acts as a pivot point.
   int col_1 = promptCol();
+  bool flag = true;
 
+do{
   while(checkIfX(row_1, col_1) == false) {
   row_1 = promptRow();
   col_1 = promptCol();
  }
 
-board[row_1][col_1] = 'S'; //pivot point placed
 string _direction = direction();
 
 if(_direction == "up"){
   if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0){
     if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
     board[row_1-2][col_1] = 'S';
     board[row_1-3][col_1] = 'S';
     board[row_1-4][col_1] = 'S';
+    flag = true;
    }
   }
   else {
     cout << "No empty spots up!\n";
+    flag = false;
   }
  }
 
 else if(_direction == "down"){
  if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8) {
    if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
     board[row_1+2][col_1] = 'S';
     board[row_1+3][col_1] = 'S';
     board[row_1+4][col_1] = 'S';
+    flag = true;
   }
    else {
     cout << "No empty spots down!\n";
+    flag = false;
   }
  }
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4) {
     if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1-1] = 'S';
      board[row_1][col_1-2] = 'S';
      board[row_1][col_1-3] = 'S';
      board[row_1][col_1-4] = 'S';
+     flag = true;
   }
   else {
     cout << "No empty spots down!\n";
+    flag = false;
   }
  }
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8) {
     if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1+1] = 'S';
      board[row_1][col_1+2] = 'S';
      board[row_1][col_1+3] = 'S';
      board[row_1][col_1+4] = 'S';
+     flag = true;
   }
   else {
     cout << "No Empty Spots\n";
+    flag = false;
    }
   }
  }
+} while (flag == false);
+    cout << "Ship 5 placed.\n\n";
     BoardPrint();
 
 }
 
 void Board::Ship6() {
- //function calls previous ships to place
+ //function calls previous ships to place  
   Ship5();
   cout << "\nPlace Ship 6:\n";
   int row_1 = promptRow();
   int col_1 = promptCol();
-
+  bool flag = true;
+  do {
+  
   while(checkIfX(row_1, col_1) == false) {
   row_1 = promptRow();
   col_1 = promptCol();
  }
 
-board[row_1][col_1] = 'S'; //initial point placed.
+
 string _direction = direction();
 
 if(_direction == "up"){
   if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0 && row_1-5 >= 0){
     if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true && checkIfX(row_1-5, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
     board[row_1-2][col_1] = 'S';
     board[row_1-3][col_1] = 'S';
     board[row_1-4][col_1] = 'S';
     board[row_1-5][col_1] = 'S'; // check, test ship five & output.
+    flag = true;
    }
   }
   else {
-    cout << "No empty spots up!";
+    cout << "No empty spots up!\n";
+    flag = false;
   }
  }
 
 else if(_direction == "down"){
  if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8 && row_1+5 <= 8) {
    if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true && checkIfX(row_1+5, col_1) == true) {
+    board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
     board[row_1+2][col_1] = 'S';
     board[row_1+3][col_1] = 'S';
     board[row_1+4][col_1] = 'S';
     board[row_1+5][col_1] = 'S';
+    flag = true;
   }
    else {
     cout << "No empty spots down!\n";
+    flag = false;
   }
  }
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4 && col_1-5) {
     if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true && checkIfX(row_1, col_1-5) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1-1] = 'S';
      board[row_1][col_1-2] = 'S';
      board[row_1][col_1-3] = 'S';
      board[row_1][col_1-4] = 'S';
      board[row_1][col_1-5] = 'S';
+     flag = true;
   }
   else {
     cout << "No empty spots down!\n";
+    flag = false;
   }
  }
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8 && col_1+5 <= 8) {
     if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true && checkIfX(row_1, col_1+5) == true) {
+     board[row_1][col_1] = 'S';
      board[row_1][col_1+1] = 'S';
      board[row_1][col_1+2] = 'S';
      board[row_1][col_1+3] = 'S';
      board[row_1][col_1+4] = 'S';
      board[row_1][col_1+5] = 'S';
+     flag = true;
   }
   else {
     cout << "No Empty Spots\n";
+    flag = false;
    }
   }
  }
-
+  } while( flag == false );
+    cout << "Ship 6 placed.\n";
     BoardPrint();
 }
 
@@ -413,7 +481,7 @@ else if(_direction == "down"){
 
 // returns true if the desired row, col is valid location. X.
 bool Board::checkIfX(int row_1, int col_1) {
-if(board[row_1][col_1] == 'X') {
+if(board[row_1][col_1] == '*') {
 return true;
  }
  else{
@@ -421,7 +489,7 @@ return true;
  }
 }
 
-// returns integer when the player inputs a char. This function calls convertCharToInt to satisfy board contraints. A-J = 0-9.
+// returns integer when the player inputs a char. This function calls convertCharToInt to satisfy board contraints. A-J = 0-9. 
 int Board::promptCol() {
   char m_col;
   bool valid = false;
@@ -436,21 +504,29 @@ int Board::promptCol() {
 
 // returns integer and checks to see if desired location is valid. 1-9.
 int Board::promptRow(){
+  bool bad = false;
   int m_row;
   bool valid = false;
   do {
     cout << "which row?(int)\n";
     cin >> m_row;
+    bad = cin.fail();
+	if (bad){
+	cout << "Error message" << endl;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	}
     valid = checkRow(m_row);
   } while(valid == false);
-  return(9-m_row); // temp? //
+
+  return(9-m_row); 
 }
 
 //converts Char to corresponding integer on the board.
 int Board::convertCharToInt(char m_col) {
   if(m_col == 'A' || m_col == 'a'){
     return(0);
-  }
+  } 
   else if(m_col == 'B' || m_col == 'b'){
     return(1);
   }
@@ -459,13 +535,13 @@ int Board::convertCharToInt(char m_col) {
   }
   else if(m_col == 'D' || m_col =='d'){
     return(3);
-  }
+  }  
   else if(m_col == 'E'|| m_col == 'e'){
     return(4);
   }
   else if(m_col == 'F'|| m_col == 'f'){
     return(5);
-  }
+  } 
   else if(m_col == 'G'|| m_col == 'g'){
     return(6);
   }
@@ -486,7 +562,7 @@ int Board::convertCharToInt(char m_col) {
   }
 }
 
-//returns a string, function used when the player wants to orient the ship in a desired direction.
+//returns a string, function used when the player wants to orient the ship in a desired direction. 
 string Board::direction() {
  string shipDirection;
  for( ; ;)
@@ -511,7 +587,7 @@ string Board::direction() {
 // returns bool depending if the desired location is valid on the board. A-J.
 bool Board::checkCol(char m_col) {
   if(m_col == 'A' || m_col == 'a'|| m_col == 'B' || m_col == 'b' || m_col == 'C' || m_col == 'c'
-  || m_col == 'D' || m_col == 'd' || m_col == 'E' || m_col == 'e'|| m_col == 'F' ||
+  || m_col == 'D' || m_col == 'd' || m_col == 'E' || m_col == 'e'|| m_col == 'F' || 
    m_col == 'f' || m_col == 'G' || m_col == 'g' || m_col == 'H' || m_col == 'h' || m_col == 'I' || m_col == 'i' || m_col == 'J' || m_col == 'j') {
     return true;
   }
@@ -539,3 +615,4 @@ else {
 return false;
  }
 }
+

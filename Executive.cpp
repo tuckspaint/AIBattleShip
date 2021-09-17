@@ -1,7 +1,8 @@
-//Executive.cpp iteration 1.1
+//Executive.cpp iteration 1.2
 #include "Executive.h"
 #include "Board.h"
 #include <iostream>
+#include <stdio.h>
 using namespace std;
 
 void Executive::run() {
@@ -10,8 +11,8 @@ char hitmiss_2[9][10];
 
 for(int i = 0; i < 9; i ++) {
  for(int j = 0; j < 10; j++) {
-     hitmiss_1[i][j] = 'X';
-     hitmiss_2[i][j] = 'X';
+     hitmiss_1[i][j] = '*';
+     hitmiss_2[i][j] = '*';
     }
  }
 
@@ -35,10 +36,12 @@ for( ; ; )
 		cout << "Invalid input, enter again" << endl;
 	}
 }
-cout << "\nPlayer 1 board:\n";
+cout << "\nPLAYER 1 BOARD:\n";
 Board board_1(numShips);
-cout << "\nPlayer 2 board:\n";
+std::cout << "\x1B[2J\x1B[H";
+cout << "\nPLAYER 2 BOARD:\n";
 Board board_2(numShips);
+std::cout << "\x1B[2J\x1B[H";
 
 winningCondition(numShips);
 do {
@@ -59,19 +62,22 @@ if(choice == 1) {
 
 //choice 2
 if(choice == 2) {
-for( ; ;)
-{
-	cout << "What row would you like to hit?(int)\n";
+    bool bad = false;
+	bool valid = false;
+    do {
+    cout << "What row would you like to hit?(int)\n";
 	cin >> row;
-	if(row == 1 || row == 2 || row == 3 || row == 4 || row == 5 || row == 6 || row == 7 || row == 8 || row == 9)
-	{
-		break;
-	}
-	else
-	{
-		cout << "Invalid input, enter again" << endl;
-	}
-}
+    if(row == 1 || row == 2 || row == 3 || row == 4 || row == 5 || row == 6 || row == 7 || row == 8 || row == 9){
+        valid = true;
+    }
+	bad = cin.fail();
+    if(bad){
+    cout << "Error message" << endl;
+	cin.clear();
+	cin.ignore(1000, '\n');
+    }
+ }while(valid == false);
+
 for( ; ;)
 {
 	cout << "What col would you like to hit?(char)\n";
@@ -95,7 +101,7 @@ if(currentPlayer == 1) {
         hitmiss_1[9-row][new_char] = 'H';
         hitcount++;
         if(winningCondition(numShips) == hitcount) {
-            cout << "Congratulations Player 1! You won!";
+            cout << "Congratulations Player 1! You win!\n";
             return;
         }
     }
@@ -104,38 +110,33 @@ if(currentPlayer == 1) {
         hitmiss_1[9-row][new_char] = 'M';
     }
 }
-/*else {
-    if(board_1.checkBoard(row,col) == true ) {
-        cout << "Hit";
-        hitmiss_2[row][col] = 'H';
-        hitcount2++;
-    }
-    else{
-        cout << "You missed their ship\n";
-        hitmiss_2[row][col] = 'M';
-    }*/
+
 if(currentPlayer == 2) {
     new_char = board_1.convertCharToInt(col);
-    if(board_2.checkBoard(row,new_char) == true && hitmiss_2[row][new_char] != 'H')
+    if(board_2.checkBoard(row,new_char) == true && hitmiss_2[9-row][new_char] != 'H')
     {
         cout << "You hit their ship\n";
-        hitmiss_1[9-row][new_char] = 'H';
+        hitmiss_2[9-row][new_char] = 'H';
         hitcount2++;
         if(winningCondition(numShips) == hitcount2) {
-            cout << "Congratulations Player 2! You won!";
+            cout << "Congratulations Player 2! You win!\n";
             return;
         }
     }
     else {
         cout << "you missed their ship.\n";
-        hitmiss_1[9-row][new_char] = 'M';
+        hitmiss_2[9-row][new_char] = 'M';
     }
  }
+ std::cin.ignore(1024,'\n');
+ cout << "Press Enter to continue:";
+ std::cin.get();
 playerChange();
 }
 
 //choice 3
 if(choice == 3) {
+    cout << "    Hit/Miss Board\n";
     if(currentPlayer == 1) {
          int counter = 9;
 for(int i = 0; i < 9; i ++) {
@@ -204,4 +205,5 @@ void Executive::playerChange(){
     else {
         currentPlayer = 1;
     }
+    std::cout << "\x1B[2J\x1B[H";
 }
