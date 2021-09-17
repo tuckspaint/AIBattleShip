@@ -1,4 +1,4 @@
-//Board.h
+//Board.h iteration 1.1
 #ifndef BOARD_H
 #define BOARD_H
 #include <string>
@@ -11,19 +11,18 @@ private:
 int m_numShips;
 
 public:
-//char** board;
-char board[9][10];
+char board;
 Board(int numShips);
-~Board(){};
-void Ship1();             // Ships 1-6 will be called depending on the amount of ships the player wants to pick.  
+~Board();
+void Ship1();             // Ships 1-6 will be called depending on the amount of ships the player wants to pick.
 void Ship2();             // each function will call the previous ship function up to a maximum of 6.
 void Ship3();             //
 void Ship4();             //
 void Ship5();             //
-void Ship6();             // 
+void Ship6();             //
 void run();
 
-//prints layout of the board at its current state.               
+//prints layout of the board at its current state.
 void BoardPrint();
 
 //helper functions
