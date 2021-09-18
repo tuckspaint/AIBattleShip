@@ -112,7 +112,7 @@ else if(_direction == "down"){
 
   }
   else {
-    cout << "Invalid\n";
+    cout << "No empty spots in that direction.\n";
     flag = false;
 
   }
@@ -191,7 +191,7 @@ else if(_direction == "down"){
      flag = true;
   }
   else {
-    cout << "No empty spots down!\n";
+    cout << "No empty spots left!\n";
     flag = true;
   }
  }
@@ -205,7 +205,7 @@ else if(_direction == "down"){
      flag = true;
   }
   else {
-    cout << "No Empty Spots\n";
+    cout << "No empty spots right\n";
     flag = false;
    }
   }
@@ -288,7 +288,7 @@ else if(_direction == "down"){
      flag = true;
   }
   else {
-    cout << "No Empty Spots\n";
+    cout << "No empty spots right\n";
     flag = false;
    }
   }
@@ -359,7 +359,7 @@ else if(_direction == "down"){
      flag = true;
   }
   else {
-    cout << "No empty spots down!\n";
+    cout << "No empty spots left!\n";
     flag = false;
   }
  }
@@ -375,7 +375,7 @@ else if(_direction == "down"){
      flag = true;
   }
   else {
-    cout << "No Empty Spots\n";
+    cout << "No empty spots right\n";
     flag = false;
    }
   }
@@ -567,7 +567,7 @@ string Board::direction() {
  string shipDirection;
  for( ; ;)
 {
-	 cout << "Where would you like to place the rest of your ship?: \n";
+	 cout << "Where would you like to place the rest of your ship?(up, down, left or right): \n";
 	 cin >> shipDirection;
 	 if(shipDirection == "up" || shipDirection == "down" || shipDirection == "left" || shipDirection == "right")
 	 {

@@ -113,7 +113,7 @@ if(currentPlayer == 1) {
 
 if(currentPlayer == 2) {
     new_char = board_1.convertCharToInt(col);
-    if(board_2.checkBoard(row,new_char) == true && hitmiss_2[9-row][new_char] != 'H')
+    if(board_1.checkBoard(row,new_char) == true && hitmiss_2[9-row][new_char] != 'H')
     {
         cout << "You hit their ship\n";
         hitmiss_2[9-row][new_char] = 'H';
