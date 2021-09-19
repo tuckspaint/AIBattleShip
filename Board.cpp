@@ -81,7 +81,7 @@ do{
 string _direction = direction();
 
 if(_direction == "up"){
-  if(row_1 != 0 && checkIfX(row_1-1, col_1) == true){
+  if(row_1 >= 0 && checkIfX(row_1-1, col_1) == true){
     board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
     flag = true;
@@ -93,7 +93,7 @@ if(_direction == "up"){
   }
  }
 else if(_direction == "down"){
-  if(row_1 != 8 && checkIfX(row_1+1, col_1) == true){
+  if(row_1 <= 8 && checkIfX(row_1+1, col_1) == true){
     board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
     flag = true;
@@ -105,7 +105,7 @@ else if(_direction == "down"){
   }
  }
  else if(_direction == "left"){
-  if(row_1 != 0 && checkIfX(row_1, col_1-1) == true){
+  if(row_1 <= 0 && checkIfX(row_1, col_1-1) == true){
     board[row_1][col_1] = 'S';
     board[row_1][col_1-1] = 'S';
     flag = true;
@@ -118,7 +118,7 @@ else if(_direction == "down"){
   }
  }
  else if(_direction == "right"){
-  if(col_1 != 9 && checkIfX(row_1, col_1+1) == true){
+  if(col_1 <= 9 && checkIfX(row_1, col_1+1) == true){
     board[row_1][col_1] = 'S';
     board[row_1][col_1+1] = 'S';
     flag = true;
@@ -153,13 +153,17 @@ do {
 string _direction = direction();
 
 
-if(_direction == "up"){
-  if(row_1 >= 0 && col_1-2 >= 0){
+if(_direction == "up") {
+  if(row_1-1 >= 0 && row_1-2 >= 0) {
     if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true) {
     board[row_1][col_1] = 'S';
     board[row_1-1][col_1] = 'S';
     board[row_1-2][col_1] = 'S';
     flag = true;
+   }
+    else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
    }
   }
   else {
@@ -169,19 +173,24 @@ if(_direction == "up"){
  }
 
 else if(_direction == "down"){
- if(row_1-1 <= 8 && col_1-2 <= 8) {
+ if(row_1+1 <= 8 && row_1+2 <= 8) {
    if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true) {
     board[row_1][col_1] = 'S';
     board[row_1+1][col_1] = 'S';
     board[row_1+2][col_1] = 'S';
     flag = true;
-  }
+    }
+   else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+   }
+ }
    else {
     cout << "No empty spots down!\n";
-    flag = true;
-  }
- }
+    flag = false; 
+   }
 }
+
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0) {
     if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true) {
@@ -192,10 +201,15 @@ else if(_direction == "down"){
   }
   else {
     cout << "No empty spots left!\n";
-    flag = true;
+    flag = false;
   }
  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
 }
+
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8) {
     if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true) {
@@ -208,6 +222,10 @@ else if(_direction == "down"){
     cout << "No empty spots right\n";
     flag = false;
    }
+  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
   }
  }
 } while (flag == false);
@@ -262,6 +280,10 @@ else if(_direction == "down"){
     flag = false;
   }
  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3) {
@@ -277,6 +299,10 @@ else if(_direction == "down"){
     flag = false;
   }
  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8) {
@@ -291,6 +317,10 @@ else if(_direction == "down"){
     cout << "No empty spots right\n";
     flag = false;
    }
+  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
   }
  }
   } while (flag == false);
@@ -324,6 +354,10 @@ if(_direction == "up"){
     board[row_1-3][col_1] = 'S';
     board[row_1-4][col_1] = 'S';
     flag = true;
+    }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
    }
   }
   else {
@@ -347,6 +381,10 @@ else if(_direction == "down"){
     flag = false;
   }
  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4) {
@@ -363,6 +401,10 @@ else if(_direction == "down"){
     flag = false;
   }
  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8) {
@@ -378,6 +420,10 @@ else if(_direction == "down"){
     cout << "No empty spots right\n";
     flag = false;
    }
+  }
+  else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
   }
  }
 } while (flag == false);
@@ -414,9 +460,13 @@ if(_direction == "up"){
     board[row_1-5][col_1] = 'S'; // check, test ship five & output.
     flag = true;
    }
-  }
   else {
     cout << "No empty spots up!\n";
+    flag = false;
+ }
+  }
+  else {
+    cout << "You cannot place ship in that direction\n";
     flag = false;
   }
  }
@@ -437,6 +487,11 @@ else if(_direction == "down"){
     flag = false;
   }
  }
+ else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
+
 }
  else if(_direction == "left"){
    if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4 && col_1-5) {
@@ -454,6 +509,11 @@ else if(_direction == "down"){
     flag = false;
   }
  }
+else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
+
 }
  else if(_direction == "right"){
    if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8 && col_1+5 <= 8) {
@@ -471,6 +531,11 @@ else if(_direction == "down"){
     flag = false;
    }
   }
+else {
+    cout << "You cannot place ship in that direction\n";
+    flag = false;
+  }
+
  }
   } while( flag == false );
     cout << "Ship 6 placed.\n";
@@ -512,7 +577,7 @@ int Board::promptRow(){
     cin >> m_row;
     bad = cin.fail();
 	if (bad){
-	cout << "Error message" << endl;
+	cout << "ERROR try entering a valid coordinate\n" << endl;
 	cin.clear();
 	cin.ignore(1000, '\n');
 	}
