@@ -1,0 +1,7 @@
+work cited:
+
+reference for cin.fail() :http://www.cplusplus.com/forum/beginner/2957/
+
+reference for cin.get() and cin.ignore(): https://stackoverflow.com/questions/903221/press-enter-to-continue
+
+reference for clearing terminal : https://www.quora.com/How-can-you-write-your-own-CLRSCR-function-in-C
