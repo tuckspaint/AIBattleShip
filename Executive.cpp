@@ -72,7 +72,7 @@ if(choice == 2) {
     }
 	bad = cin.fail();
     if(bad){
-    cout << "Error message" << endl;
+    cout << "Enter a valid position." << endl;
 	cin.clear();
 	cin.ignore(1000, '\n');
     }
@@ -99,15 +99,22 @@ if(currentPlayer == 1) {
     {
         cout << "You hit their ship\n";
         hitmiss_1[9-row][new_char] = 'H';
+	board_2.board[9-row][new_char] = 'H';
         hitcount++;
         if(winningCondition(numShips) == hitcount) {
             cout << "Congratulations Player 1! You win!\n";
             return;
         }
     }
+
+    else if(hitmiss_1[9-row][new_char] == 'H' || hitmiss_1[9-row][new_char] == 'M') {
+        cout << "You already hit that spot.\n";
+    }
+
     else {
         cout << "you missed their ship.\n";
         hitmiss_1[9-row][new_char] = 'M';
+	board_2.board[9-row][new_char] = 'M';
     }
 }
 
@@ -117,15 +124,22 @@ if(currentPlayer == 2) {
     {
         cout << "You hit their ship\n";
         hitmiss_2[9-row][new_char] = 'H';
+	board_1.board[9-row][new_char] = 'H';
         hitcount2++;
         if(winningCondition(numShips) == hitcount2) {
             cout << "Congratulations Player 2! You win!\n";
             return;
         }
     }
+
+    else if(hitmiss_2[9-row][new_char] == 'H' || hitmiss_2[9-row][new_char] == 'M') {
+        cout << "You already hit that spot.\n";
+    }
+
     else {
         cout << "you missed their ship.\n";
         hitmiss_2[9-row][new_char] = 'M';
+	board_1.board[9-row][new_char] = 'M';
     }
  }
  std::cin.ignore(1024,'\n');
