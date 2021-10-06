@@ -1,11 +1,14 @@
 //Executive.h iteration 1.2
 #ifndef EXECUTIVE_H
 #define EXECUTIVE_H
+#include "Board.h"
 
 class Executive {
     private:
     //initiate current player to 1, player 1 always place's ships first and always shoot first.
     int currentPlayer = 1;
+    bool aiChosen = 0;
+    int modeChosen = 0;
 
     public:
     /*
@@ -48,6 +51,9 @@ class Executive {
     */
     void playerChange();
 
+    bool hardMove(Board board1);
+    bool easyMove(Board board1);
+    bool mediumMove(Board board1);
 
 };
 #endif

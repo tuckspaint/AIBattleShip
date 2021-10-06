@@ -1,4 +1,4 @@
-prog: main.o Board.o Executive.o
+prog: main.o Board.o Executive.o 
 	g++ -std=c++11 -g -Wall main.o Executive.o Board.o -o prog
 
 main.o: main.cpp
