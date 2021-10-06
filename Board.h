@@ -9,6 +9,7 @@ class Board {
 private:
 
     int m_numShips;
+    bool m_ifAi;
 
 public:
     /*
@@ -18,15 +19,15 @@ public:
     * @return none
     */
     char board[9][10];
-    
+
     /*
     * @pre none
     * @post takes number of ships and fills board with 'X'
     * @param numShips
     * @return none
     */
-    Board(int numShips);
-    
+    Board(int numShips, bool ifAi);
+
     /*
     * @pre none
     * @post asks players to place 1 ships on their board
@@ -34,7 +35,7 @@ public:
     * @return none
     */
     void Ship1();
-   
+
     /*
     * @pre none
     * @post asks players to each place 2 ships on their board
@@ -42,7 +43,7 @@ public:
     * @return none
     */
     void Ship2();
-   
+
     /*
     * @pre none
     * @post asks players to each place 3 ships on their board
@@ -50,7 +51,7 @@ public:
     * @return none
     */
     void Ship3();
-    
+
     /*
     * @pre none
     * @post asks players to each place 4 ships on their board
@@ -58,7 +59,7 @@ public:
     * @return none
     */
     void Ship4();
-    
+
     /*
     * @pre none
     * @post asks players to each place 5 ships on their board
@@ -66,7 +67,7 @@ public:
     * @return none
     */
     void Ship5();
-    
+
     /*
     * @pre none
     * @post asks players to each place 6 ships on their board
@@ -74,7 +75,7 @@ public:
     * @return none
     */
     void Ship6();
-    
+
     /*
     * @pre uses global variable numShips
     * @post prints board and calls the method due to amount of ships
@@ -92,7 +93,7 @@ public:
     void BoardPrint();
 
     //helper functions
-    
+
     /*
     * @pre none
     * @post used to place ships in the desired direction
@@ -100,7 +101,7 @@ public:
     * @return the string for the ship oriantation
     */
     string direction();
-    
+
     /*
     * @pre none
     * @post calls convertCharToInt due to the input
@@ -108,7 +109,7 @@ public:
     * @return the integer based on the given char
     */
     int promptCol();
-   
+
     /*
     * @pre none
     * @post checks given row input
@@ -116,7 +117,7 @@ public:
     * @return integer and checks to see if location is valid
     */
     int promptRow();
-   
+
     /*
     * @pre none
     * @post converts the row in char to an int for the board
@@ -124,7 +125,7 @@ public:
     * @return int that matches the given char
     */
     int convertCharToInt(char m_row);
-    
+
     /*
     * @pre none
     * @post checks to see if location is valid for col
@@ -132,7 +133,7 @@ public:
     * @return true if valid, false if not
     */
     bool checkCol(char m_col);
-    
+
     /*
     * @pre none
     * @post checks to see if location is valid for row
@@ -140,7 +141,7 @@ public:
     * @return true if valid, false if not
     */
     bool checkRow(int m_row);
-    
+
     /*
     * @pre none
     * @post checks board
@@ -148,7 +149,7 @@ public:
     * @return true if row and col is a valid location
     */
     bool checkIfX(int row_1, int col_1);
-   
+
     //new 09/11
     /*
     * @pre none
@@ -157,6 +158,11 @@ public:
     * @return true if there is a ship, false if not
     */
     bool checkBoard(int m_row, int m_col);
+////////////////////////////////////////////////Project 2 new stuff
+    void runShipBoard();
+    int aiRandomRow();
+    int aiRandomCol();
+    int aiRandomDir();
 
 };
 #endif
