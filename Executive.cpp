@@ -26,12 +26,14 @@ char col;
 int numShips;
 int new_char;
 string userChoice;
+aiChosen = 0;
 //medium AI stuff
 int aiRow;
 int aiCol;
 int initHit[2] = {11, 11}; //initHit {11,11} means a ship has not been hit, anything else is the location of the first hit on the most recently hit ship
 int prevMedTurn[2]; //last coordinate medium ai attacked
 int dist = 0; //iterator for some while loops pretty much
+char tempSize; //for checkSunk
 	
 while(1)
 {
@@ -83,13 +85,10 @@ Board board_1(numShips, 0);
 std::cout << "\x1B[2J\x1B[H";
 if (aiChosen == 0) {
 	cout << "\nPLAYER 2 BOARD:\n";
-	Board board_2(numShips, 0);
-	std::cout << "\x1B[2J\x1B[H";
 }
-else {
 	Board board_2(numShips, aiChosen);
 	std::cout << "\x1B[2J\x1B[H";
-}
+
 
 winningCondition(numShips);
 
@@ -239,15 +238,16 @@ do {
             else if(modeChosen == 2)
             {
                 //put code for medium move in here	
-                if (initHit == {11, 11}) { //random attack if a ship hasnt been hit
+                if (initHit[0] == 11 && initHit[1] == 11) { //random attack if a ship hasnt been hit
                     //randomize a coordinate until it gets a spot that hasnt been attacked
                     do {
                         aiRow = aiRandomRow();
                         aiCol = aiRandomCol();
-                    } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                    } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                         
                     if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                        initHit = {aiRow, aiCol};
+                        initHit[0] = aiRow;
+                        initHit[0] = aiCol;
                     }
                 }
                 else {
@@ -329,14 +329,17 @@ do {
                         if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                             //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                             //randomize a coordinate until it gets a spot that hasnt been attacked
-                            initHit = {11,11};
+                            initHit[0] = 11;
+                            initHit[1] = 11;
+
                             do {
                                 aiRow = aiRandomRow();
                                 aiCol = aiRandomCol();
-                            } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                         
                             if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                initHit = {aiRow, aiCol};
+                        	initHit[0] = aiRow;
+                        	initHit[0] = aiCol;
                             }
                         }
                     }
@@ -418,14 +421,17 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
@@ -488,14 +494,17 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
@@ -560,14 +569,17 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
@@ -611,14 +623,17 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
@@ -664,14 +679,17 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
@@ -696,14 +714,17 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
@@ -730,28 +751,33 @@ do {
                             if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
                                 //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                                 //randomize a coordinate until it gets a spot that hasnt been attacked
-                                initHit = {11,11};
+                            	initHit[0] = 11;
+                            	initHit[1] = 11;
+
                                 do {
                                     aiRow = aiRandomRow();
                                     aiCol = aiRandomCol();
-                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                    initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                                 }
                             }
                         }
                         else {//checking every direction did not result in a sunk ship
                             //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
                             //randomize a coordinate until it gets a spot that hasnt been attacked
-                            initHit = {11,11};
+                            initHit[0] = 11;
+			    initHit[1] = 11;
                             do {
                                 aiRow = aiRandomRow();
                                 aiCol = aiRandomCol();
-                            } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M');
                         
                             if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
-                                initHit = {aiRow, aiCol};
+                        		initHit[0] = aiRow;
+                        		initHit[0] = aiCol;
                             }
                         }
                     }
@@ -762,10 +788,18 @@ do {
                 //doesn't really need to be in a different piece of code for each difficulty so whoever's doing the integration can get rid of this
                 if(board_1.checkBoard(aiRow,aiCol) == true && hitmiss_2[9-aiRow][aiCol] != 'H')
                 {
+			tempSize = board_1.board[9-aiRow][aiCol];
                         hitmiss_2[9-aiRow][aiCol] = 'H';
                         board_1.board[9-aiRow][aiCol] = 'H';
                         hitcount2++;
                         cout << "The AI hit a ship!";
+			
+			//NEED THIS FOR MEDIUM AI
+			if (board_1.checkSunk(tempSize)) {
+				initHit[0] = 11;
+				initHit[1] = 11;
+			}
+			
                         if(winningCondition(numShips) == hitcount2) {
                         cout << "Congratulations the AI won!\n";
                         return;
@@ -788,7 +822,7 @@ do {
                 {
                     for(int j=0; j<10; j++)
                     {
-                        if(board_1.checkboard(9-i, j))
+                        if(board_1.checkBoard(9-i, j))
                         {
                             cout << "The AI hit your ship!\n";
                             board_1.board[i][j] = 'H';
