@@ -5,6 +5,9 @@
 #include <stdexcept>
 #include <cstdlib>
 #include <ctime>
+#include <stdio.h>
+#include <stdlib.h>     
+#include <time.h>
 using namespace std;
 
 
@@ -606,8 +609,6 @@ void Board::Ship5() {
  //functions calls previous ships to place.
   Ship4();
 
-  int row_1;
-  int col_1;
   bool flag = true;
   if(m_ifAi == 1) {
     int row_1 = aiRandomRow();
