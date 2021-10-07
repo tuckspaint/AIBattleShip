@@ -159,10 +159,19 @@ public:
     */
     bool checkBoard(int m_row, int m_col);
 ////////////////////////////////////////////////Project 2 new stuff
+    /*
+    * @pre none
+    * @post checks if the ship is on the board
+    * @param shipSize
+    * @return true if the ship is NOT on the board (i.e. it's sunk), false if the ship is on the board
+    */
+    bool checkSunk(char shipSize);
+    
     void runShipBoard();
     int aiRandomRow();
     int aiRandomCol();
     int aiRandomDir();
+    
 
 };
 #endif
