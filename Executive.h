@@ -55,6 +55,12 @@ class Executive {
     bool easyMove(Board board1);
     bool mediumMove(Board board1);
     
+    void Printframe(char board[9][10], int milliSec); 
+    void Playmiss(int msPerFrame);
+    void Playhit(int msPerFrame);
+    void Playp1win(int msPerFrame, int loops); 
+    void Playp2win(int msPerFrame, int loops); 
+    
     ///////////////////////////////////New Project 2 - Jason /////////////////////
     int aiRandomRow();
 
