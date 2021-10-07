@@ -20,16 +20,22 @@ for(int i = 0; i < 9; i ++) {
 
 int hitcount = 0;
 int hitcount2 = 0;
-int hitcount3 = 0;
 int choice;
 int row;
 char col;
 int numShips;
 int new_char;
 string userChoice;
+//medium AI stuff
+int aiRow;
+int aiCol;
+int initHit[2] = {11, 11}; //initHit {11,11} means a ship has not been hit, anything else is the location of the first hit on the most recently hit ship
+int prevMedTurn[2]; //last coordinate medium ai attacked
+int dist = 0; //iterator for some while loops pretty much
+	
 while(1)
 {
-    cout << "Which game mode would you like to player with? (PvP or PvAI):";
+    cout << "Which game mode would you like to play with? (PvP or PvAI):";
     cin >> userChoice;
     if(userChoice == "PvP" || userChoice == "PvAI")
     {
@@ -73,11 +79,17 @@ for( ; ; )
 }
 
 cout << "\nPLAYER 1 BOARD:\n";
-Board board_1(numShips);
+Board board_1(numShips, 0);
 std::cout << "\x1B[2J\x1B[H";
-cout << "\nPLAYER 2 BOARD:\n";
-Board board_2(numShips);
-std::cout << "\x1B[2J\x1B[H";
+if (aiChosen == 0) {
+	cout << "\nPLAYER 2 BOARD:\n";
+	Board board_2(numShips, 0);
+	std::cout << "\x1B[2J\x1B[H";
+}
+else {
+	Board board_2(numShips, aiChosen);
+	std::cout << "\x1B[2J\x1B[H";
+}
 
 winningCondition(numShips);
 
@@ -92,7 +104,7 @@ do {
     }
     else
     {
-        cout << "It's the robots turn\n";
+        cout << "It's the robot's turn\n";
         choice = 2;
     }
 
@@ -202,10 +214,572 @@ do {
             if(modeChosen == 1)
             {
                 //put code for easy move in here
+                aiRow = aiRandomRow();
+                aiCol = aiRandomCol();
+                if(board_1.checkBoard(aiRow,aiCol) == true && hitmiss_2[9-aiRow][aiCol] != 'H')
+                {
+                        hitmiss_2[9-aiRow][aiCol] = 'H';
+                        board_1.board[9-aiRow][aiCol] = 'H';
+                        hitcount2++;
+                        cout << "The AI hit a ship!";
+                        if(winningCondition(numShips) == hitcount2) {
+                        cout << "Congratulations the AI won!\n";
+                        return;
+                        }
+                }
+                else if(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M') {
+                        cout << "The AI shot at the same spot again.\n";
+                }
+                else {
+                        cout << "The AI missed their shot.\n";
+                        hitmiss_2[9-aiRow][aiCol] = 'M';
+                    board_1.board[9-aiRow][aiCol] = 'M';
+                }
             }
             else if(modeChosen == 2)
             {
-                //put code for medium move in here
+                //put code for medium move in here	
+                if (initHit == {11, 11}) { //random attack if a ship hasnt been hit
+                    //randomize a coordinate until it gets a spot that hasnt been attacked
+                    do {
+                        aiRow = aiRandomRow();
+                        aiCol = aiRandomCol();
+                    } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                        
+                    if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                        initHit = {aiRow, aiCol};
+                    }
+                }
+                else {
+                    if (prevMedTurn == initHit) {
+                        //try to attack north of initHit
+                        dist = 1;
+                        while (initHit[0] + dist <= 9) {//while there is a space on the board dist spaces north of initHit
+                            if (hitmiss_2[9-(initHit[0] + dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces north of initHit
+                                //exit loop, try east next
+                                break;
+                            }
+                            else if (hitmiss_2[9-(initHit[0] + dist)][initHit[1]] == 'H') {//if the tile dist spaces north of initHit has already been hit (could be part of the same ship)
+                                dist++;
+                            }
+                            else {//if the tile dist spaces north of initHit has not been attacked
+                                //attack dist spaces north of initHit
+                                aiRow = initHit[0] + dist;
+                                aiCol = initHit[1];
+                                break;
+                            }
+                        }
+                        if (initHit[0] + dist > 9 || hitmiss_2[9-(initHit[0] + dist)][initHit[1]] == 'M') {//if attacking north failed
+                            //try to attack east of initHit
+                            dist = 1;
+                            while (initHit[1] + dist <= 9) {//while there is a space on the board dist spaces east of initHit
+                                if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if the ai has already missed in the tile dist spaces east of initHit
+                                    //exit loop, try south next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'H') {//if the tile dist spaces east of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces east of initHit has not been attacked
+                                    //attack dist spaces east of initHit
+                                    aiRow = initHit[0];
+                                    aiCol = initHit[1] + dist;
+                                    break;
+                                }
+                            }	
+                        }
+                        if (initHit[1] + dist > 9 || hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if attacking east failed
+                            //try to attack south of initHit
+                            dist = 1;
+                            while (initHit[0] - dist >= 1) {//while there is a space on the board dist spaces south of initHit
+                                if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces south of initHit
+                                    //exit loop, try west next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'H') {//if the tile dist spaces south of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces south of initHit has not been attacked
+                                    //attack dist spaces south of initHit
+                                    aiRow = initHit[0] - dist;
+                                    aiCol = initHit[1];
+                                    break;
+                                }
+                            }	
+                        }
+                        if (initHit[0] + dist < 1 || hitmiss_2[9-(initHit[0] - dist)][initHit[1]] == 'M') {//if attacking south failed
+                            //try to attack west of initHit
+                            dist = 1;
+                            while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                    //exit loop, try south next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces west of initHit has not been attacked
+                                    //attack dist spaces west of initHit
+                                    aiRow = initHit[0];
+                                    aiCol = initHit[1] - dist;
+                                    break;
+                                }
+                            }	
+                        }
+                        if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                            //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                            //randomize a coordinate until it gets a spot that hasnt been attacked
+                            initHit = {11,11};
+                            do {
+                                aiRow = aiRandomRow();
+                                aiCol = aiRandomCol();
+                            } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                        
+                            if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                initHit = {aiRow, aiCol};
+                            }
+                        }
+                    }
+                    else if (prevMedTurn[0] > initHit[0]) { //last turn was north of initHit
+                        if (board_1.checkBoard(prevMedTurn[0], prevMedTurn[1])) { //if last turn was a hit
+                            dist = 1;
+                            while (initHit[0] + dist <= 9) {//while there is a space on the board dist spaces north of initHit
+                                if (hitmiss_2[9-(initHit[0] + dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces north of initHit
+                                    //exit loop, try east next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-(initHit[0] + dist)][initHit[1]] == 'H') {//if the tile dist spaces north of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces north of initHit has not been attacked
+                                    //attack dist spaces north of initHit
+                                    aiRow = initHit[0] + dist;
+                                    aiCol = initHit[1];
+                                    break;
+                                }
+                            }
+                            if (initHit[0] + dist > 9 || hitmiss_2[9-(initHit[0] + dist)][initHit[1]] == 'M') {//if attacking north failed
+                                //try to attack east of initHit
+                                dist = 1;
+                                while (initHit[1] + dist <= 9) {//while there is a space on the board dist spaces east of initHit
+                                    if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if the ai has already missed in the tile dist spaces east of initHit
+                                        //exit loop, try south next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'H') {//if the tile dist spaces east of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces east of initHit has not been attacked
+                                        //attack dist spaces east of initHit
+                                        aiRow = initHit[0];
+                                        aiCol = initHit[1] + dist;
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[1] + dist > 9 || hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if attacking east failed
+                                //try to attack south of initHit
+                                dist = 1;
+                                while (initHit[0] - dist >= 1) {//while there is a space on the board dist spaces south of initHit
+                                    if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces south of initHit
+                                        //exit loop, try west next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'H') {//if the tile dist spaces south of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces south of initHit has not been attacked
+                                        //attack dist spaces south of initHit
+                                        aiRow = initHit[0] - dist;
+                                        aiCol = initHit[1];
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[0] + dist < 1 || hitmiss_2[9-(initHit[0] - dist)][initHit[1]] == 'M') {//if attacking south failed
+                                //try to attack west of initHit
+                                dist = 1;
+                                while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                    if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                        //exit loop, try south next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces west of initHit has not been attacked
+                                        //attack dist spaces west of initHit
+                                        aiRow = initHit[0];
+                                        aiCol = initHit[1] - dist;
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                        else { //there is nothing directly north of initHit
+                            //try to attack east of initHit
+                            dist = 1;
+                            while (initHit[1] + dist <= 9) {//while there is a space on the board dist spaces east of initHit
+                                if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if the ai has already missed in the tile dist spaces east of initHit
+                                    //exit loop, try south next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'H') {//if the tile dist spaces east of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces east of initHit has not been attacked
+                                    //attack dist spaces east of initHit
+                                    aiRow = initHit[0];
+                                    aiCol = initHit[1] + dist;
+                                    break;
+                                }
+                            }	
+                            if (initHit[1] + dist > 9 || hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if attacking east failed
+                                //try to attack south of initHit
+                                dist = 1;
+                                while (initHit[0] - dist >= 1) {//while there is a space on the board dist spaces south of initHit
+                                    if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces south of initHit
+                                        //exit loop, try west next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'H') {//if the tile dist spaces south of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces south of initHit has not been attacked
+                                        //attack dist spaces south of initHit
+                                        aiRow = initHit[0] - dist;
+                                        aiCol = initHit[1];
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[0] + dist < 1 || hitmiss_2[9-(initHit[0] - dist)][initHit[1]] == 'M') {//if attacking south failed
+                                //try to attack west of initHit
+                                dist = 1;
+                                while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                    if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                        //exit loop, try south next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces west of initHit has not been attacked
+                                        //attack dist spaces west of initHit
+                                        aiRow = initHit[0];
+                                        aiCol = initHit[1] - dist;
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                    }
+                    else if (prevMedTurn[1] > initHit[1]) { //last turn was east of initHit
+                        if (board_1.checkBoard(prevMedTurn[0], prevMedTurn[1])) { //if last turn was a hit
+                            //try to attack east of initHit
+                            dist = 1;
+                            while (initHit[1] + dist <= 9) {//while there is a space on the board dist spaces east of initHit
+                                if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if the ai has already missed in the tile dist spaces east of initHit
+                                    //exit loop, try south next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'H') {//if the tile dist spaces east of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces east of initHit has not been attacked
+                                    //attack dist spaces east of initHit
+                                    aiRow = initHit[0];
+                                    aiCol = initHit[1] + dist;
+                                    break;
+                                }
+                            }	
+                            if (initHit[1] + dist > 9 || hitmiss_2[9-initHit[0]][initHit[1] + dist] == 'M') {//if attacking east failed
+                                //try to attack south of initHit
+                                dist = 1;
+                                while (initHit[0] - dist >= 1) {//while there is a space on the board dist spaces south of initHit
+                                    if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces south of initHit
+                                        //exit loop, try west next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'H') {//if the tile dist spaces south of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces south of initHit has not been attacked
+                                        //attack dist spaces south of initHit
+                                        aiRow = initHit[0] - dist;
+                                        aiCol = initHit[1];
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[0] + dist < 1 || hitmiss_2[9-(initHit[0] - dist)][initHit[1]] == 'M') {//if attacking south failed
+                                //try to attack west of initHit
+                                dist = 1;
+                                while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                    if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                        //exit loop, try south next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces west of initHit has not been attacked
+                                        //attack dist spaces west of initHit
+                                        aiRow = initHit[0];
+                                        aiCol = initHit[1] - dist;
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                        else { //there is nothing directly east of initHit	
+                            //try to attack south of initHit
+                            dist = 1;
+                            while (initHit[0] - dist >= 1) {//while there is a space on the board dist spaces south of initHit
+                                if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces south of initHit
+                                    //exit loop, try west next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'H') {//if the tile dist spaces south of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces south of initHit has not been attacked
+                                    //attack dist spaces south of initHit
+                                    aiRow = initHit[0] - dist;
+                                    aiCol = initHit[1];
+                                    break;
+                                }
+                            }	
+                            if (initHit[0] + dist < 1 || hitmiss_2[9-(initHit[0] - dist)][initHit[1]] == 'M') {//if attacking south failed
+                                //try to attack west of initHit
+                                dist = 1;
+                                while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                    if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                        //exit loop, try south next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces west of initHit has not been attacked
+                                        //attack dist spaces west of initHit
+                                        aiRow = initHit[0];
+                                        aiCol = initHit[1] - dist;
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                    }
+                    else if (prevMedTurn[0] < initHit[0]) { //last turn was south of initHit
+                        if (board_1.checkBoard(prevMedTurn[0], prevMedTurn[1])) { //if last turn was a hit
+                            //try to attack south of initHit
+                            dist = 1;
+                            while (initHit[0] - dist >= 1) {//while there is a space on the board dist spaces south of initHit
+                                if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'M') {//if the ai has already missed in the tile dist spaces south of initHit
+                                    //exit loop, try west next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-(initHit[0]-dist)][initHit[1]] == 'H') {//if the tile dist spaces south of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces south of initHit has not been attacked
+                                    //attack dist spaces south of initHit
+                                    aiRow = initHit[0] - dist;
+                                    aiCol = initHit[1];
+                                    break;
+                                }
+                            }	
+                            if (initHit[0] + dist < 1 || hitmiss_2[9-(initHit[0] - dist)][initHit[1]] == 'M') {//if attacking south failed
+                                //try to attack west of initHit
+                                dist = 1;
+                                while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                    if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                        //exit loop, try south next
+                                        break;
+                                    }
+                                    else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                        dist++;
+                                    }
+                                    else {//if the tile dist spaces west of initHit has not been attacked
+                                        //attack dist spaces west of initHit
+                                        aiRow = initHit[0];
+                                        aiCol = initHit[1] - dist;
+                                        break;
+                                    }
+                                }	
+                            }
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                        else { //there is nothing directly south of initHit
+                            //try to attack west of initHit
+                            dist = 1;
+                            while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                    //exit loop, try south next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces west of initHit has not been attacked
+                                    //attack dist spaces west of initHit
+                                    aiRow = initHit[0];
+                                    aiCol = initHit[1] - dist;
+                                    break;
+                                }
+                            }	
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                    }
+                    else if (prevMedTurn[1] < initHit[1]) { //last turn was west of initHit
+                        if (board_1.checkBoard(prevMedTurn[0], prevMedTurn[1])) { //if last turn was a hit
+                            //try to attack west of initHit
+                            dist = 1;
+                            while (initHit[1] - dist >= 0) {//while there is a space on the board dist spaces west of initHit
+                                if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if the ai has already missed in the tile dist spaces west of initHit
+                                    //exit loop, try south next
+                                    break;
+                                }
+                                else if (hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'H') {//if the tile dist spaces west of initHit has already been hit (could be part of the same ship)
+                                    dist++;
+                                }
+                                else {//if the tile dist spaces west of initHit has not been attacked
+                                    //attack dist spaces west of initHit
+                                    aiRow = initHit[0];
+                                    aiCol = initHit[1] - dist;
+                                    break;
+                                }
+                            }	
+                            if (initHit[1] - dist < 0 || hitmiss_2[9-initHit[0]][initHit[1] - dist] == 'M') {//if attacking west failed
+                                //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                                //randomize a coordinate until it gets a spot that hasnt been attacked
+                                initHit = {11,11};
+                                do {
+                                    aiRow = aiRandomRow();
+                                    aiCol = aiRandomCol();
+                                } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                            
+                                if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                    initHit = {aiRow, aiCol};
+                                }
+                            }
+                        }
+                        else {//checking every direction did not result in a sunk ship
+                            //this shouldn't really be possible but i'll just try to attack a random spot and reset initHit if it happens somehow
+                            //randomize a coordinate until it gets a spot that hasnt been attacked
+                            initHit = {11,11};
+                            do {
+                                aiRow = aiRandomRow();
+                                aiCol = aiRandomCol();
+                            } while(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M')
+                        
+                            if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
+                                initHit = {aiRow, aiCol};
+                            }
+                        }
+                    }
+                }
+                
+                //now actually tell the player what happened and edit the arrays
+                //I copied Jason's code for this, EXCEPT FOR THE PART WITH THE CAPS COMMENT ABOVE IT
+                //doesn't really need to be in a different piece of code for each difficulty so whoever's doing the integration can get rid of this
+                if(board_1.checkBoard(aiRow,aiCol) == true && hitmiss_2[9-aiRow][aiCol] != 'H')
+                {
+                        hitmiss_2[9-aiRow][aiCol] = 'H';
+                        board_1.board[9-aiRow][aiCol] = 'H';
+                        hitcount2++;
+                        cout << "The AI hit a ship!";
+                        if(winningCondition(numShips) == hitcount2) {
+                        cout << "Congratulations the AI won!\n";
+                        return;
+                        }
+                }
+                else if(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M') {
+                        cout << "The AI shot at the same spot again.\n";
+                }
+                else {
+                        cout << "The AI missed their shot.\n";
+                        hitmiss_2[9-aiRow][aiCol] = 'M';
+                    board_1.board[9-aiRow][aiCol] = 'M';
+                }
+            
             }
             else 
             {
@@ -214,12 +788,13 @@ do {
                 {
                     for(int j=0; j<10; j++)
                     {
-                        if(board_1.board[i][j] == 'S')
+                        if(board_1.checkboard(9-i, j))
                         {
                             cout << "The AI hit your ship!\n";
                             board_1.board[i][j] = 'H';
+			    hitmiss_2[i][j] = 'H';
                             changed = 1;
-                            hitcount3++;
+                            hitcount2++;
                             break;
                         }
                     }
@@ -238,7 +813,7 @@ do {
                 }
             }
             
-            if(winningCondition(numShips) == hitcount3)
+            if(winningCondition(numShips) == hitcount2)
             {
                 cout << "Congratulations the robot wins!\n";
                 return;
@@ -365,4 +940,14 @@ bool Executive::mediumMove(Board board1)
 bool Executive::easyMove(Board board1)
 {
     return true;
+}
+
+int Executive::aiRandomRow() {
+  srand((unsigned) time(0));
+  return((rand() % 9)+1);
+}
+
+int Executive::aiRandomCol() {
+  srand((unsigned) time(0));
+  return(rand() % 10);
 }
