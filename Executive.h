@@ -54,6 +54,11 @@ class Executive {
     bool hardMove(Board board1);
     bool easyMove(Board board1);
     bool mediumMove(Board board1);
+    
+    ///////////////////////////////////New Project 2 - Jason /////////////////////
+    int aiRandomRow();
+
+    int aiRandomCol();
 
 };
 #endif
