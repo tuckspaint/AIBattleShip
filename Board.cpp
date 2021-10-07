@@ -69,14 +69,14 @@ void Board::runShipBoard() {
 
 void Board::Ship1(){
   if(m_ifAi == 1) {
-    board[9-aiRandomRow()][aiRandomCol()] = 'S';
+    board[9-aiRandomRow()][aiRandomCol()] = '1';
     cout << "Ai Ship placed!\n";
   }
   else {
     cout << "\nPlace ship 1: ";
     int row_1 = promptRow();
     int col_1 = promptCol();
-    board[row_1][col_1] = 'S';
+    board[row_1][col_1] = '1';
     cout << "Ship placed!\n";
      BoardPrint();
   }
@@ -102,8 +102,8 @@ if(m_ifAi == 1) {
 
   if(_direction == "up"){
     if(row_1 >= 0 && checkIfX(row_1-1, col_1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1-1][col_1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1-1][col_1] = '2';
       flag = true;
 
     }
@@ -114,8 +114,8 @@ if(m_ifAi == 1) {
    }
   else if(_direction == "down"){
     if(row_1 <= 8 && checkIfX(row_1+1, col_1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1+1][col_1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1+1][col_1] = '2';
       flag = true;
 
     }
@@ -126,8 +126,8 @@ if(m_ifAi == 1) {
    }
    else if(_direction == "left"){
     if(row_1 <= 0 && checkIfX(row_1, col_1-1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1][col_1-1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1][col_1-1] = '2';
       flag = true;
 
     }
@@ -139,8 +139,8 @@ if(m_ifAi == 1) {
    }
    else if(_direction == "right"){
     if(col_1 <= 9 && checkIfX(row_1, col_1+1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1][col_1+1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1][col_1+1] = '2';
       flag = true;
 
     }
@@ -169,8 +169,8 @@ else {
 
   if(_direction == "up"){
     if(row_1 >= 0 && checkIfX(row_1-1, col_1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1-1][col_1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1-1][col_1] = '2';
       flag = true;
 
     }
@@ -181,8 +181,8 @@ else {
    }
   else if(_direction == "down"){
     if(row_1 <= 8 && checkIfX(row_1+1, col_1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1+1][col_1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1+1][col_1] = '2';
       flag = true;
 
     }
@@ -193,8 +193,8 @@ else {
    }
    else if(_direction == "left"){
     if(row_1 <= 0 && checkIfX(row_1, col_1-1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1][col_1-1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1][col_1-1] = '2';
       flag = true;
 
     }
@@ -206,8 +206,8 @@ else {
    }
    else if(_direction == "right"){
     if(col_1 <= 9 && checkIfX(row_1, col_1+1) == true){
-      board[row_1][col_1] = 'S';
-      board[row_1][col_1+1] = 'S';
+      board[row_1][col_1] = '2';
+      board[row_1][col_1+1] = '2';
       flag = true;
 
     }
@@ -246,9 +246,9 @@ void Board::Ship3() {
     if(_direction == "up") {
       if(row_1-1 >= 0 && row_1-2 >= 0) {
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1-1][col_1] = 'S';
-        board[row_1-2][col_1] = 'S';
+        board[row_1][col_1] = '3';
+        board[row_1-1][col_1] = '3';
+        board[row_1-2][col_1] = '3';
         flag = true;
        }
         else {
@@ -265,9 +265,9 @@ void Board::Ship3() {
     else if(_direction == "down"){
      if(row_1+1 <= 8 && row_1+2 <= 8) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1+1][col_1] = 'S';
-        board[row_1+2][col_1] = 'S';
+        board[row_1][col_1] = '3';
+        board[row_1+1][col_1] = '3';
+        board[row_1+2][col_1] = '3';
         flag = true;
         }
        else {
@@ -284,9 +284,9 @@ void Board::Ship3() {
      else if(_direction == "left"){
        if(col_1-1 >= 0 && col_1-2 >= 0) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1-1] = 'S';
-         board[row_1][col_1-2] = 'S';
+         board[row_1][col_1] = '3';
+         board[row_1][col_1-1] = '3';
+         board[row_1][col_1-2] = '3';
          flag = true;
       }
       else {
@@ -303,9 +303,9 @@ void Board::Ship3() {
      else if(_direction == "right"){
        if(col_1+1 <= 8 && col_1+2 <= 8) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1+1] = 'S';
-         board[row_1][col_1+2] = 'S';
+         board[row_1][col_1] = '3';
+         board[row_1][col_1+1] = '3';
+         board[row_1][col_1+2] = '3';
          flag = true;
       }
       else {
@@ -337,9 +337,9 @@ void Board::Ship3() {
     if(_direction == "up") {
       if(row_1-1 >= 0 && row_1-2 >= 0) {
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1-1][col_1] = 'S';
-        board[row_1-2][col_1] = 'S';
+        board[row_1][col_1] = '3';
+        board[row_1-1][col_1] = '3';
+        board[row_1-2][col_1] = '3';
         flag = true;
        }
         else {
@@ -356,9 +356,9 @@ void Board::Ship3() {
     else if(_direction == "down"){
      if(row_1+1 <= 8 && row_1+2 <= 8) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1+1][col_1] = 'S';
-        board[row_1+2][col_1] = 'S';
+        board[row_1][col_1] = '3';
+        board[row_1+1][col_1] = '3';
+        board[row_1+2][col_1] = '3';
         flag = true;
         }
        else {
@@ -375,9 +375,9 @@ void Board::Ship3() {
      else if(_direction == "left"){
        if(col_1-1 >= 0 && col_1-2 >= 0) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1-1] = 'S';
-         board[row_1][col_1-2] = 'S';
+         board[row_1][col_1] = '3';
+         board[row_1][col_1-1] = '3';
+         board[row_1][col_1-2] = '3';
          flag = true;
       }
       else {
@@ -394,9 +394,9 @@ void Board::Ship3() {
      else if(_direction == "right"){
        if(col_1+1 <= 8 && col_1+2 <= 8) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1+1] = 'S';
-         board[row_1][col_1+2] = 'S';
+         board[row_1][col_1] = '3';
+         board[row_1][col_1+1] = '3';
+         board[row_1][col_1+2] = '3';
          flag = true;
       }
       else {
@@ -437,10 +437,10 @@ void Board::Ship4() {
     if(_direction == "up"){
       if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1-1][col_1] = 'S';
-        board[row_1-2][col_1] = 'S';
-        board[row_1-3][col_1] = 'S';
+        board[row_1][col_1] = '4';
+        board[row_1-1][col_1] = '4';
+        board[row_1-2][col_1] = '4';
+        board[row_1-3][col_1] = '4';
         flag = true;
        }
       }
@@ -453,10 +453,10 @@ void Board::Ship4() {
     else if(_direction == "down"){
      if(row_1-1 <= 8 && row_1-2 <= 8 && row_1-3 <= 8) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1+1][col_1] = 'S';
-        board[row_1+2][col_1] = 'S';
-        board[row_1+3][col_1] = 'S';
+        board[row_1][col_1] = '4';
+        board[row_1+1][col_1] = '4';
+        board[row_1+2][col_1] = '4';
+        board[row_1+3][col_1] = '4';
         flag = true;
       }
        else {
@@ -472,10 +472,10 @@ void Board::Ship4() {
      else if(_direction == "left"){
        if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1-1] = 'S';
-         board[row_1][col_1-2] = 'S';
-         board[row_1][col_1-3] = 'S';
+         board[row_1][col_1] = '4';
+         board[row_1][col_1-1] = '4';
+         board[row_1][col_1-2] = '4';
+         board[row_1][col_1-3] = '4';
          flag = true;
       }
       else {
@@ -491,10 +491,10 @@ void Board::Ship4() {
      else if(_direction == "right"){
        if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1+1] = 'S';
-         board[row_1][col_1+2] = 'S';
-         board[row_1][col_1+3] = 'S';
+         board[row_1][col_1] = '4';
+         board[row_1][col_1+1] = '4';
+         board[row_1][col_1+2] = '4';
+         board[row_1][col_1+3] = '4';
          flag = true;
       }
       else {
@@ -525,10 +525,10 @@ void Board::Ship4() {
     if(_direction == "up"){
       if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1-1][col_1] = 'S';
-        board[row_1-2][col_1] = 'S';
-        board[row_1-3][col_1] = 'S';
+        board[row_1][col_1] = '4';
+        board[row_1-1][col_1] = '4';
+        board[row_1-2][col_1] = '4';
+        board[row_1-3][col_1] = '4';
         flag = true;
        }
       }
@@ -541,10 +541,10 @@ void Board::Ship4() {
     else if(_direction == "down"){
      if(row_1-1 <= 8 && row_1-2 <= 8 && row_1-3 <= 8) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1+1][col_1] = 'S';
-        board[row_1+2][col_1] = 'S';
-        board[row_1+3][col_1] = 'S';
+        board[row_1][col_1] = '4';
+        board[row_1+1][col_1] = '4';
+        board[row_1+2][col_1] = '4';
+        board[row_1+3][col_1] = '4';
         flag = true;
       }
        else {
@@ -560,10 +560,10 @@ void Board::Ship4() {
      else if(_direction == "left"){
        if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1-1] = 'S';
-         board[row_1][col_1-2] = 'S';
-         board[row_1][col_1-3] = 'S';
+         board[row_1][col_1] = '4';
+         board[row_1][col_1-1] = '4';
+         board[row_1][col_1-2] = '4';
+         board[row_1][col_1-3] = '4';
          flag = true;
       }
       else {
@@ -579,10 +579,10 @@ void Board::Ship4() {
      else if(_direction == "right"){
        if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1+1] = 'S';
-         board[row_1][col_1+2] = 'S';
-         board[row_1][col_1+3] = 'S';
+         board[row_1][col_1] = '4';
+         board[row_1][col_1+1] = '4';
+         board[row_1][col_1+2] = '4';
+         board[row_1][col_1+3] = '4';
          flag = true;
       }
       else {
@@ -623,11 +623,11 @@ void Board::Ship5() {
     if(_direction == "up"){
       if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1-1][col_1] = 'S';
-        board[row_1-2][col_1] = 'S';
-        board[row_1-3][col_1] = 'S';
-        board[row_1-4][col_1] = 'S';
+        board[row_1][col_1] = '5';
+        board[row_1-1][col_1] = '5';
+        board[row_1-2][col_1] = '5';
+        board[row_1-3][col_1] = '5';
+        board[row_1-4][col_1] = '5';
         flag = true;
         }
       else {
@@ -644,11 +644,11 @@ void Board::Ship5() {
     else if(_direction == "down"){
      if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1+1][col_1] = 'S';
-        board[row_1+2][col_1] = 'S';
-        board[row_1+3][col_1] = 'S';
-        board[row_1+4][col_1] = 'S';
+        board[row_1][col_1] = '5';
+        board[row_1+1][col_1] = '5';
+        board[row_1+2][col_1] = '5';
+        board[row_1+3][col_1] = '5';
+        board[row_1+4][col_1] = '5';
         flag = true;
       }
        else {
@@ -664,11 +664,11 @@ void Board::Ship5() {
      else if(_direction == "left"){
        if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1-1] = 'S';
-         board[row_1][col_1-2] = 'S';
-         board[row_1][col_1-3] = 'S';
-         board[row_1][col_1-4] = 'S';
+         board[row_1][col_1] = '5';
+         board[row_1][col_1-1] = '5';
+         board[row_1][col_1-2] = '5';
+         board[row_1][col_1-3] = '5';
+         board[row_1][col_1-4] = '5';
          flag = true;
       }
       else {
@@ -684,11 +684,11 @@ void Board::Ship5() {
      else if(_direction == "right"){
        if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1+1] = 'S';
-         board[row_1][col_1+2] = 'S';
-         board[row_1][col_1+3] = 'S';
-         board[row_1][col_1+4] = 'S';
+         board[row_1][col_1] = '5';
+         board[row_1][col_1+1] = '5';
+         board[row_1][col_1+2] = '5';
+         board[row_1][col_1+3] = '5';
+         board[row_1][col_1+4] = '5';
          flag = true;
       }
       else {
@@ -719,11 +719,11 @@ void Board::Ship5() {
     if(_direction == "up"){
       if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1-1][col_1] = 'S';
-        board[row_1-2][col_1] = 'S';
-        board[row_1-3][col_1] = 'S';
-        board[row_1-4][col_1] = 'S';
+        board[row_1][col_1] = '5';
+        board[row_1-1][col_1] = '5';
+        board[row_1-2][col_1] = '5';
+        board[row_1-3][col_1] = '5';
+        board[row_1-4][col_1] = '5';
         flag = true;
         }
       else {
@@ -740,11 +740,11 @@ void Board::Ship5() {
     else if(_direction == "down"){
      if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true) {
-        board[row_1][col_1] = 'S';
-        board[row_1+1][col_1] = 'S';
-        board[row_1+2][col_1] = 'S';
-        board[row_1+3][col_1] = 'S';
-        board[row_1+4][col_1] = 'S';
+        board[row_1][col_1] = '5';
+        board[row_1+1][col_1] = '5';
+        board[row_1+2][col_1] = '5';
+        board[row_1+3][col_1] = '5';
+        board[row_1+4][col_1] = '5';
         flag = true;
       }
        else {
@@ -760,11 +760,11 @@ void Board::Ship5() {
      else if(_direction == "left"){
        if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1-1] = 'S';
-         board[row_1][col_1-2] = 'S';
-         board[row_1][col_1-3] = 'S';
-         board[row_1][col_1-4] = 'S';
+         board[row_1][col_1] = '5';
+         board[row_1][col_1-1] = '5';
+         board[row_1][col_1-2] = '5';
+         board[row_1][col_1-3] = '5';
+         board[row_1][col_1-4] = '5';
          flag = true;
       }
       else {
@@ -780,11 +780,11 @@ void Board::Ship5() {
      else if(_direction == "right"){
        if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true) {
-         board[row_1][col_1] = 'S';
-         board[row_1][col_1+1] = 'S';
-         board[row_1][col_1+2] = 'S';
-         board[row_1][col_1+3] = 'S';
-         board[row_1][col_1+4] = 'S';
+         board[row_1][col_1] = '5';
+         board[row_1][col_1+1] = '5';
+         board[row_1][col_1+2] = '5';
+         board[row_1][col_1+3] = '5';
+         board[row_1][col_1+4] = '5';
          flag = true;
       }
       else {
@@ -827,12 +827,12 @@ void Board::Ship6() {
   if(_direction == "up"){
     if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0 && row_1-5 >= 0){
       if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true && checkIfX(row_1-5, col_1) == true) {
-      board[row_1][col_1] = 'S';
-      board[row_1-1][col_1] = 'S';
-      board[row_1-2][col_1] = 'S';
-      board[row_1-3][col_1] = 'S';
-      board[row_1-4][col_1] = 'S';
-      board[row_1-5][col_1] = 'S'; // check, test ship five & output.
+      board[row_1][col_1] = '6';
+      board[row_1-1][col_1] = '6';
+      board[row_1-2][col_1] = '6';
+      board[row_1-3][col_1] = '6';
+      board[row_1-4][col_1] = '6';
+      board[row_1-5][col_1] = '6'; // check, test ship five & output.
       flag = true;
      }
     else {
@@ -849,12 +849,12 @@ void Board::Ship6() {
   else if(_direction == "down"){
    if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8 && row_1+5 <= 8) {
      if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true && checkIfX(row_1+5, col_1) == true) {
-      board[row_1][col_1] = 'S';
-      board[row_1+1][col_1] = 'S';
-      board[row_1+2][col_1] = 'S';
-      board[row_1+3][col_1] = 'S';
-      board[row_1+4][col_1] = 'S';
-      board[row_1+5][col_1] = 'S';
+      board[row_1][col_1] = '6';
+      board[row_1+1][col_1] = '6';
+      board[row_1+2][col_1] = '6';
+      board[row_1+3][col_1] = '6';
+      board[row_1+4][col_1] = '6';
+      board[row_1+5][col_1] = '6';
       flag = true;
     }
      else {
@@ -871,12 +871,12 @@ void Board::Ship6() {
    else if(_direction == "left"){
      if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4 && col_1-5) {
       if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true && checkIfX(row_1, col_1-5) == true) {
-       board[row_1][col_1] = 'S';
-       board[row_1][col_1-1] = 'S';
-       board[row_1][col_1-2] = 'S';
-       board[row_1][col_1-3] = 'S';
-       board[row_1][col_1-4] = 'S';
-       board[row_1][col_1-5] = 'S';
+       board[row_1][col_1] = '6';
+       board[row_1][col_1-1] = '6';
+       board[row_1][col_1-2] = '6';
+       board[row_1][col_1-3] = '6';
+       board[row_1][col_1-4] = '6';
+       board[row_1][col_1-5] = '6';
        flag = true;
     }
     else {
@@ -893,12 +893,12 @@ void Board::Ship6() {
    else if(_direction == "right"){
      if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8 && col_1+5 <= 8) {
       if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true && checkIfX(row_1, col_1+5) == true) {
-       board[row_1][col_1] = 'S';
-       board[row_1][col_1+1] = 'S';
-       board[row_1][col_1+2] = 'S';
-       board[row_1][col_1+3] = 'S';
-       board[row_1][col_1+4] = 'S';
-       board[row_1][col_1+5] = 'S';
+       board[row_1][col_1] = '6';
+       board[row_1][col_1+1] = '6';
+       board[row_1][col_1+2] = '6';
+       board[row_1][col_1+3] = '6';
+       board[row_1][col_1+4] = '6';
+       board[row_1][col_1+5] = '6';
        flag = true;
     }
     else {
@@ -932,12 +932,12 @@ void Board::Ship6() {
   if(_direction == "up"){
     if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0 && row_1-5 >= 0){
       if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true && checkIfX(row_1-5, col_1) == true) {
-      board[row_1][col_1] = 'S';
-      board[row_1-1][col_1] = 'S';
-      board[row_1-2][col_1] = 'S';
-      board[row_1-3][col_1] = 'S';
-      board[row_1-4][col_1] = 'S';
-      board[row_1-5][col_1] = 'S'; // check, test ship five & output.
+      board[row_1][col_1] = '6';
+      board[row_1-1][col_1] = '6';
+      board[row_1-2][col_1] = '6';
+      board[row_1-3][col_1] = '6';
+      board[row_1-4][col_1] = '6';
+      board[row_1-5][col_1] = '6'; // check, test ship five & output.
       flag = true;
      }
     else {
@@ -954,12 +954,12 @@ void Board::Ship6() {
   else if(_direction == "down"){
    if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8 && row_1+5 <= 8) {
      if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true && checkIfX(row_1+5, col_1) == true) {
-      board[row_1][col_1] = 'S';
-      board[row_1+1][col_1] = 'S';
-      board[row_1+2][col_1] = 'S';
-      board[row_1+3][col_1] = 'S';
-      board[row_1+4][col_1] = 'S';
-      board[row_1+5][col_1] = 'S';
+      board[row_1][col_1] = '6';
+      board[row_1+1][col_1] = '6';
+      board[row_1+2][col_1] = '6';
+      board[row_1+3][col_1] = '6';
+      board[row_1+4][col_1] = '6';
+      board[row_1+5][col_1] = '6';
       flag = true;
     }
      else {
@@ -976,12 +976,12 @@ void Board::Ship6() {
    else if(_direction == "left"){
      if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4 && col_1-5) {
       if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true && checkIfX(row_1, col_1-5) == true) {
-       board[row_1][col_1] = 'S';
-       board[row_1][col_1-1] = 'S';
-       board[row_1][col_1-2] = 'S';
-       board[row_1][col_1-3] = 'S';
-       board[row_1][col_1-4] = 'S';
-       board[row_1][col_1-5] = 'S';
+       board[row_1][col_1] = '6';
+       board[row_1][col_1-1] = '6';
+       board[row_1][col_1-2] = '6';
+       board[row_1][col_1-3] = '6';
+       board[row_1][col_1-4] = '6';
+       board[row_1][col_1-5] = '6';
        flag = true;
     }
     else {
@@ -998,12 +998,12 @@ void Board::Ship6() {
    else if(_direction == "right"){
      if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8 && col_1+5 <= 8) {
       if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true && checkIfX(row_1, col_1+5) == true) {
-       board[row_1][col_1] = 'S';
-       board[row_1][col_1+1] = 'S';
-       board[row_1][col_1+2] = 'S';
-       board[row_1][col_1+3] = 'S';
-       board[row_1][col_1+4] = 'S';
-       board[row_1][col_1+5] = 'S';
+       board[row_1][col_1] = '6';
+       board[row_1][col_1+1] = '6';
+       board[row_1][col_1+2] = '6';
+       board[row_1][col_1+3] = '6';
+       board[row_1][col_1+4] = '6';
+       board[row_1][col_1+5] = '6';
        flag = true;
     }
     else {
@@ -1173,7 +1173,9 @@ else {
 
 
 bool Board::checkBoard(int row, int col) {
-if(board[9-row][col] == 'S') {
+if(board[9-row][col] == '1' || board[9-row][col] == '2'
+|| board[9-row][col] == '3' || board[9-row][col] == '4'
+|| board[9-row][col] == '5' || board[9-row][col] == '6') {
   return true;
  }
 else {
@@ -1182,6 +1184,17 @@ return false;
 }
 
 ///////////////////////////////////////New Project 2
+bool Board::checkSunk(char shipSize) {
+	for(int i = 0; i < 9; i ++) {
+		for(int j = 0; j < 10; j++) {
+			if(board[i][j] == shipSize) {
+				return(false);
+			}
+		}
+	}
+	return(true);
+ }
+
 int Board::aiRandomDir() {
   srand((unsigned) time(0));
   return((rand() % 4)+1);
