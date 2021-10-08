@@ -165,6 +165,7 @@ do {
             {
                 //cout << "You hit their ship\n";
 		Playhit(150);
+		std::cout << "\x1B[2J\x1B[H";
                 hitmiss_1[9-row][new_char] = 'H';
                 board_2.board[9-row][new_char] = 'H';
                 hitcount++;
@@ -181,6 +182,7 @@ do {
             else {
                 //cout << "you missed their ship.\n";
 		Playmiss(100);
+		std::cout << "\x1B[2J\x1B[H";
                 hitmiss_1[9-row][new_char] = 'M';
                 board_2.board[9-row][new_char] = 'M';
             }
@@ -192,6 +194,7 @@ do {
             {
                 //cout << "You hit their ship\n";
 		Playhit(150);
+		std::cout << "\x1B[2J\x1B[H";
                 hitmiss_2[9-row][new_char] = 'H';
                 board_1.board[9-row][new_char] = 'H';
                 hitcount2++;
@@ -208,6 +211,7 @@ do {
             else {
                 //cout << "you missed their ship.\n";
 		Playmiss(100);
+		std::cout << "\x1B[2J\x1B[H";
                 hitmiss_2[9-row][new_char] = 'M';
                 board_1.board[9-row][new_char] = 'M';
             }
