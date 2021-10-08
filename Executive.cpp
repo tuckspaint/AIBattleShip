@@ -226,7 +226,7 @@ do {
                         hitmiss_2[9-aiRow][aiCol] = 'H';
                         board_1.board[9-aiRow][aiCol] = 'H';
                         hitcount2++;
-                        cout << "The AI hit a ship!";
+                        cout << "The AI hit a ship!\n";
                         if(winningCondition(numShips) == hitcount2) {
                         //cout << "Congratulations the AI won!\n";
 			Playp2win(100,1);
@@ -254,7 +254,7 @@ do {
                         
                     if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         initHit[0] = aiRow;
-                        initHit[0] = aiCol;
+                        initHit[1] = aiCol;
                     }
                 }
                 else {
@@ -346,7 +346,7 @@ do {
                         
                             if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         	initHit[0] = aiRow;
-                        	initHit[0] = aiCol;
+                        	initHit[1] = aiCol;
                             }
                         }
                     }
@@ -438,7 +438,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -511,7 +511,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -586,7 +586,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -640,7 +640,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -696,7 +696,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -731,7 +731,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -768,7 +768,7 @@ do {
                             
                                 if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                                 }
                             }
                         }
@@ -784,7 +784,7 @@ do {
                         
                             if (board_1.checkBoard(aiRow, aiCol) && hitmiss_2[9-aiRow][aiCol] != 'H') {//im assuming we're just gonna use board_2 and hitmiss_2 for the ai
                         		initHit[0] = aiRow;
-                        		initHit[0] = aiCol;
+                        		initHit[1] = aiCol;
                             }
                         }
                     }
@@ -799,7 +799,7 @@ do {
                         hitmiss_2[9-aiRow][aiCol] = 'H';
                         board_1.board[9-aiRow][aiCol] = 'H';
                         hitcount2++;
-                        cout << "The AI hit a ship!";
+                        cout << "The AI hit a ship!\n";
 			
 			//NEED THIS FOR MEDIUM AI
 			if (board_1.checkSunk(tempSize)) {
