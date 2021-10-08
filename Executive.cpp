@@ -506,7 +506,7 @@ bool Executive::attackRight(int &aiRow, int &aiCol, int initHit[2], char hitmiss
   return false;
 }
 bool Executive::attackDown(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]) {
-  for (int i = 1; initHit[0] - i >= 1; i--) {
+  for (int i = 1; initHit[0] - i >= 1; i++) {
       if (hitmiss_2[9-(initHit[0] - i)][initHit[1]] == 'M') {
         break;
       }
@@ -519,7 +519,7 @@ bool Executive::attackDown(int &aiRow, int &aiCol, int initHit[2], char hitmiss_
   return false;
 }
 bool Executive::attackLeft(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]) {
-  for (int i = 1; initHit[1] - i >= 0; i--) {
+  for (int i = 1; initHit[1] - i >= 0; i++) {
       if (hitmiss_2[9-initHit[0]][initHit[1] - i] == 'M') {
         break;
       }
