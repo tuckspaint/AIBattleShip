@@ -61,6 +61,11 @@ class Executive {
     void Playp1win(int msPerFrame, int loops); 
     void Playp2win(int msPerFrame, int loops); 
     
+    bool attackUp(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]);
+    bool attackRight(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]);
+    bool attackDown(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]);
+    bool attackLeft(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]);
+    
     ///////////////////////////////////New Project 2 - Jason /////////////////////
     int aiRandomRow();
 
