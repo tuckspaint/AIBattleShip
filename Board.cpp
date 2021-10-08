@@ -526,7 +526,7 @@ void Board::Ship4() {
       }
      }
       } while (flag == false);
-        cout << "Ai Ship 4 placed.\n\n";
+        cout << "Ai Ship 4 placed.\n";
         Ship3();
   }
   else {
@@ -721,7 +721,7 @@ void Board::Ship5() {
       }
      }
     } while (flag == false);
-        cout << "Ai Ship 5 placed.\n\n";
+        cout << "Ai Ship 5 placed.\n";
         Ship4();
 
   }
