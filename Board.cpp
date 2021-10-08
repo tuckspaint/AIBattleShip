@@ -6,8 +6,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <stdio.h>
-#include <stdlib.h>     
+#include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 using namespace std;
 
 
@@ -71,9 +72,23 @@ void Board::runShipBoard() {
 }
 
 void Board::Ship1(){
+  bool flag = true;
+  int row_1;
+  int col_1;
   if(m_ifAi == 1) {
-    board[9-aiRandomRow()][aiRandomCol()] = '1';
-    cout << "Ai Ship placed!\n";
+    do {
+      row_1 = 9-aiRandomRow();
+      col_1 = aiRandomCol();
+      if(checkIfX(row_1, col_1) == true){
+        board[row_1][col_1] = '1';
+        cout << "Ai Ship placed!\n";
+        flag = true;
+      }
+      else{
+        flag = false;
+      }
+    }while(flag == false);
+
   }
   else {
     cout << "\nPlace ship 1: ";
@@ -86,7 +101,6 @@ void Board::Ship1(){
 }
 
 void Board::Ship2() {
-Ship1();
 
 int row_1;
 int col_1;
@@ -96,15 +110,14 @@ if(m_ifAi == 1) {
   do{
 
   do{
-    row_1 = aiRandomRow();
+    row_1 = 9-aiRandomRow();
     col_1 = aiRandomCol();
    }while(checkIfX(row_1, col_1) == false);
 
 
   string _direction = direction();
-
   if(_direction == "up"){
-    if(row_1 >= 0 && checkIfX(row_1-1, col_1) == true){
+    if(row_1 <= 8 && row_1 >= 1 && checkIfX(row_1-1, col_1) == true){
       board[row_1][col_1] = '2';
       board[row_1-1][col_1] = '2';
       flag = true;
@@ -116,7 +129,7 @@ if(m_ifAi == 1) {
     }
    }
   else if(_direction == "down"){
-    if(row_1 <= 8 && checkIfX(row_1+1, col_1) == true){
+    if(row_1 >= 0 && row_1 <= 7 && checkIfX(row_1+1, col_1) == true){
       board[row_1][col_1] = '2';
       board[row_1+1][col_1] = '2';
       flag = true;
@@ -128,7 +141,7 @@ if(m_ifAi == 1) {
     }
    }
    else if(_direction == "left"){
-    if(row_1 <= 0 && checkIfX(row_1, col_1-1) == true){
+    if(col_1 <= 9 && col_1 >= 1 && checkIfX(row_1, col_1-1) == true){
       board[row_1][col_1] = '2';
       board[row_1][col_1-1] = '2';
       flag = true;
@@ -137,11 +150,10 @@ if(m_ifAi == 1) {
     else {
 
       flag = false;
-
     }
    }
    else if(_direction == "right"){
-    if(col_1 <= 9 && checkIfX(row_1, col_1+1) == true){
+    if(col_1 >= 0 && col_1 <= 8 && checkIfX(row_1, col_1+1) == true){
       board[row_1][col_1] = '2';
       board[row_1][col_1+1] = '2';
       flag = true;
@@ -149,16 +161,17 @@ if(m_ifAi == 1) {
     }
 
     else {
-
       flag = false;
 
     }
    }
   }while(flag == false);
   cout << "Ai Ship 2 placed!\n";
+  Ship1();
 }
 else {
   //PLayer 2
+  Ship1();
   cout << "Place ship 2: ";
   do{
 
@@ -171,7 +184,7 @@ else {
   string _direction = direction();
 
   if(_direction == "up"){
-    if(row_1 >= 0 && checkIfX(row_1-1, col_1) == true){
+    if(row_1 <= 8 && row_1 >= 1 && checkIfX(row_1-1, col_1) == true){
       board[row_1][col_1] = '2';
       board[row_1-1][col_1] = '2';
       flag = true;
@@ -183,7 +196,7 @@ else {
     }
    }
   else if(_direction == "down"){
-    if(row_1 <= 8 && checkIfX(row_1+1, col_1) == true){
+    if(row_1 >= 0 && row_1 <= 7 && checkIfX(row_1+1, col_1) == true){
       board[row_1][col_1] = '2';
       board[row_1+1][col_1] = '2';
       flag = true;
@@ -195,7 +208,7 @@ else {
     }
    }
    else if(_direction == "left"){
-    if(row_1 <= 0 && checkIfX(row_1, col_1-1) == true){
+    if(col_1 <= 9 && col_1 >= 1 && checkIfX(row_1, col_1-1) == true){
       board[row_1][col_1] = '2';
       board[row_1][col_1-1] = '2';
       flag = true;
@@ -208,7 +221,7 @@ else {
     }
    }
    else if(_direction == "right"){
-    if(col_1 <= 9 && checkIfX(row_1, col_1+1) == true){
+    if(col_1 >= 0 && col_1 <= 8 && checkIfX(row_1, col_1+1) == true){
       board[row_1][col_1] = '2';
       board[row_1][col_1+1] = '2';
       flag = true;
@@ -230,16 +243,17 @@ else {
 }
 
 void Board::Ship3() {
-  Ship2();
+
   int row_1;
   int col_1;
   bool flag = true;
   if(m_ifAi == 1) {
-    row_1 = aiRandomRow();
-    col_1 = aiRandomCol();
+
     do {
+      row_1 = 9-aiRandomRow();
+      col_1 = aiRandomCol();
       while(checkIfX(row_1, col_1) == false) {
-      row_1 = aiRandomRow();
+      row_1 = 9-aiRandomRow();
       col_1 = aiRandomCol();
      }
 
@@ -247,7 +261,7 @@ void Board::Ship3() {
 
 
     if(_direction == "up") {
-      if(row_1-1 >= 0 && row_1-2 >= 0) {
+      if(row_1 >= 2 && row_1 <= 8) {
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true) {
         board[row_1][col_1] = '3';
         board[row_1-1][col_1] = '3';
@@ -266,7 +280,7 @@ void Board::Ship3() {
      }
 
     else if(_direction == "down"){
-     if(row_1+1 <= 8 && row_1+2 <= 8) {
+     if(row_1 <= 6 && row_1 >= 0) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true) {
         board[row_1][col_1] = '3';
         board[row_1+1][col_1] = '3';
@@ -285,7 +299,7 @@ void Board::Ship3() {
     }
 
      else if(_direction == "left"){
-       if(col_1-1 >= 0 && col_1-2 >= 0) {
+       if(col_1 >= 2 && col_1 <= 9) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true) {
          board[row_1][col_1] = '3';
          board[row_1][col_1-1] = '3';
@@ -304,7 +318,7 @@ void Board::Ship3() {
     }
 
      else if(_direction == "right"){
-       if(col_1+1 <= 8 && col_1+2 <= 8) {
+       if(col_1 <= 7 && col_1 >= 0) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true) {
          board[row_1][col_1] = '3';
          board[row_1][col_1+1] = '3';
@@ -323,12 +337,15 @@ void Board::Ship3() {
      }
     } while (flag == false);
      cout << "Ai Ship 3 placed.\n";
+     Ship2();
   }
   else {
-    row_1 = promptRow();
-    col_1 = promptCol();
+    Ship2();
+
     cout << "\nPlace Ship 3: \n";
     do {
+      row_1 = promptRow();
+      col_1 = promptCol();
       while(checkIfX(row_1, col_1) == false) {
       row_1 = promptRow();
       col_1 = promptCol();
@@ -338,7 +355,7 @@ void Board::Ship3() {
 
 
     if(_direction == "up") {
-      if(row_1-1 >= 0 && row_1-2 >= 0) {
+      if(row_1 >= 2 && row_1 <= 8) {
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true) {
         board[row_1][col_1] = '3';
         board[row_1-1][col_1] = '3';
@@ -357,7 +374,7 @@ void Board::Ship3() {
      }
 
     else if(_direction == "down"){
-     if(row_1+1 <= 8 && row_1+2 <= 8) {
+     if(row_1 <= 6 && row_1 >= 0) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true) {
         board[row_1][col_1] = '3';
         board[row_1+1][col_1] = '3';
@@ -376,7 +393,7 @@ void Board::Ship3() {
     }
 
      else if(_direction == "left"){
-       if(col_1-1 >= 0 && col_1-2 >= 0) {
+       if(col_1 >= 2 && col_1 <= 9) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true) {
          board[row_1][col_1] = '3';
          board[row_1][col_1-1] = '3';
@@ -395,7 +412,7 @@ void Board::Ship3() {
     }
 
      else if(_direction == "right"){
-       if(col_1+1 <= 8 && col_1+2 <= 8) {
+       if(col_1 <= 7 && col_1 >= 0) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true) {
          board[row_1][col_1] = '3';
          board[row_1][col_1+1] = '3';
@@ -420,25 +437,23 @@ void Board::Ship3() {
 }
 
 void Board::Ship4() {
-  Ship3();
 
   int row_1;
   int col_1;
   bool flag = true;
-  if(m_ifAi == 1)
-  {
-    row_1 = aiRandomRow();
-    col_1 = aiRandomCol();
+  if(m_ifAi == 1){
     do {
+      row_1 = 9-aiRandomRow();
+      col_1 = aiRandomCol();
       while(checkIfX(row_1, col_1) == false) {
-      row_1 = aiRandomRow();
+      row_1 = 9-aiRandomRow();
       col_1 = aiRandomCol();
      }
 
     string _direction = direction();
 
     if(_direction == "up"){
-      if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0){
+      if(row_1 >= 3 && row_1 <= 8){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true) {
         board[row_1][col_1] = '4';
         board[row_1-1][col_1] = '4';
@@ -454,7 +469,7 @@ void Board::Ship4() {
      }
 
     else if(_direction == "down"){
-     if(row_1-1 <= 8 && row_1-2 <= 8 && row_1-3 <= 8) {
+     if(row_1 <= 5 && row_1 >= 0) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true) {
         board[row_1][col_1] = '4';
         board[row_1+1][col_1] = '4';
@@ -473,7 +488,7 @@ void Board::Ship4() {
       }
     }
      else if(_direction == "left"){
-       if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3) {
+       if(col_1 >= 3 && col_1 <= 9) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true) {
          board[row_1][col_1] = '4';
          board[row_1][col_1-1] = '4';
@@ -492,7 +507,7 @@ void Board::Ship4() {
       }
     }
      else if(_direction == "right"){
-       if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8) {
+       if(col_1 <= 6 && col_1 >= 0) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true) {
          board[row_1][col_1] = '4';
          board[row_1][col_1+1] = '4';
@@ -512,12 +527,15 @@ void Board::Ship4() {
      }
       } while (flag == false);
         cout << "Ai Ship 4 placed.\n\n";
+        Ship3();
   }
   else {
+    Ship3();
     cout << "\nPlace ship 4: \n";
-    int row_1 = promptRow();
-    int col_1 = promptCol();
+
     do {
+      int row_1 = promptRow();
+      int col_1 = promptCol();
       while(checkIfX(row_1, col_1) == false) {
       row_1 = promptRow();
       col_1 = promptCol();
@@ -526,7 +544,7 @@ void Board::Ship4() {
     string _direction = direction();
 
     if(_direction == "up"){
-      if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0){
+      if(row_1 >= 3 && row_1 <= 8){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true) {
         board[row_1][col_1] = '4';
         board[row_1-1][col_1] = '4';
@@ -542,7 +560,7 @@ void Board::Ship4() {
      }
 
     else if(_direction == "down"){
-     if(row_1-1 <= 8 && row_1-2 <= 8 && row_1-3 <= 8) {
+     if(row_1 <= 5 && row_1 >= 0) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true) {
         board[row_1][col_1] = '4';
         board[row_1+1][col_1] = '4';
@@ -561,7 +579,7 @@ void Board::Ship4() {
       }
     }
      else if(_direction == "left"){
-       if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3) {
+       if(col_1 >= 3 && col_1 <= 9) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true) {
          board[row_1][col_1] = '4';
          board[row_1][col_1-1] = '4';
@@ -580,7 +598,7 @@ void Board::Ship4() {
       }
     }
      else if(_direction == "right"){
-       if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8) {
+       if(col_1 <= 6 && col_1 >= 0) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true) {
          board[row_1][col_1] = '4';
          board[row_1][col_1+1] = '4';
@@ -607,22 +625,22 @@ void Board::Ship4() {
 
 void Board::Ship5() {
  //functions calls previous ships to place.
-  Ship4();
 
   bool flag = true;
   if(m_ifAi == 1) {
-    int row_1 = aiRandomRow();
-    int col_1 = aiRandomCol();
+
     do{
+      int row_1 = 9-aiRandomRow();
+      int col_1 = aiRandomCol();
       while(checkIfX(row_1, col_1) == false) {
-      row_1 = aiRandomRow();
+      row_1 = 9-aiRandomRow();
       col_1 = aiRandomCol();
      }
 
     string _direction = direction();
 
     if(_direction == "up"){
-      if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0){
+      if(row_1 >= 4 && row_1 <= 8){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true) {
         board[row_1][col_1] = '5';
         board[row_1-1][col_1] = '5';
@@ -643,7 +661,7 @@ void Board::Ship5() {
      }
 
     else if(_direction == "down"){
-     if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8) {
+     if(row_1 <= 5 && row_1 >= 0) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true) {
         board[row_1][col_1] = '5';
         board[row_1+1][col_1] = '5';
@@ -663,7 +681,7 @@ void Board::Ship5() {
       }
     }
      else if(_direction == "left"){
-       if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4) {
+       if(col_1 >= 4 && col_1 <= 9) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true) {
          board[row_1][col_1] = '5';
          board[row_1][col_1-1] = '5';
@@ -683,7 +701,7 @@ void Board::Ship5() {
       }
     }
      else if(_direction == "right"){
-       if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8) {
+       if(col_1 <= 5 && col_1 >= 0) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true) {
          board[row_1][col_1] = '5';
          board[row_1][col_1+1] = '5';
@@ -704,12 +722,16 @@ void Board::Ship5() {
      }
     } while (flag == false);
         cout << "Ai Ship 5 placed.\n\n";
+        Ship4();
+
   }
   else {
+    Ship4();
     cout << "\nPlace ship 5: \n";
-    int row_1 = promptRow(); //initial mark acts as a pivot point.
-    int col_1 = promptCol();
+
     do{
+      int row_1 = promptRow(); //initial mark acts as a pivot point.
+      int col_1 = promptCol();
       while(checkIfX(row_1, col_1) == false) {
       row_1 = promptRow();
       col_1 = promptCol();
@@ -718,7 +740,7 @@ void Board::Ship5() {
     string _direction = direction();
 
     if(_direction == "up"){
-      if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0){
+      if(row_1 >= 4 && row_1 <= 8){
         if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true) {
         board[row_1][col_1] = '5';
         board[row_1-1][col_1] = '5';
@@ -739,7 +761,7 @@ void Board::Ship5() {
      }
 
     else if(_direction == "down"){
-     if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8) {
+     if(row_1 <= 5 && row_1 >= 0) {
        if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true) {
         board[row_1][col_1] = '5';
         board[row_1+1][col_1] = '5';
@@ -759,7 +781,7 @@ void Board::Ship5() {
       }
     }
      else if(_direction == "left"){
-       if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4) {
+       if(col_1 >= 4 && col_1 <= 9) {
         if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true) {
          board[row_1][col_1] = '5';
          board[row_1][col_1-1] = '5';
@@ -779,7 +801,7 @@ void Board::Ship5() {
       }
     }
      else if(_direction == "right"){
-       if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8) {
+       if(col_1 <= 5 && col_1 >= 0) {
         if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true) {
          board[row_1][col_1] = '5';
          board[row_1][col_1+1] = '5';
@@ -807,18 +829,18 @@ void Board::Ship5() {
 
 void Board::Ship6() {
  //function calls previous ships to place
-  Ship5();
+
 
   int row_1;
   int col_1;
   bool flag = true;
   if(m_ifAi == 1) {
-    row_1 = aiRandomRow();
-    col_1 = aiRandomCol();
-    do {
 
+    do {
+    row_1 = 9-aiRandomRow();
+    col_1 = aiRandomCol();
     while(checkIfX(row_1, col_1) == false) {
-      row_1 = aiRandomRow();
+      row_1 = 9-aiRandomRow();
       col_1 = aiRandomCol();
    }
 
@@ -826,7 +848,7 @@ void Board::Ship6() {
   string _direction = direction();
 
   if(_direction == "up"){
-    if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0 && row_1-5 >= 0){
+    if(row_1 >= 5 && row_1 <= 8){
       if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true && checkIfX(row_1-5, col_1) == true) {
       board[row_1][col_1] = '6';
       board[row_1-1][col_1] = '6';
@@ -848,7 +870,7 @@ void Board::Ship6() {
    }
 
   else if(_direction == "down"){
-   if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8 && row_1+5 <= 8) {
+   if(row_1 <= 3 && row_1 >= 0) {
      if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true && checkIfX(row_1+5, col_1) == true) {
       board[row_1][col_1] = '6';
       board[row_1+1][col_1] = '6';
@@ -870,7 +892,7 @@ void Board::Ship6() {
 
   }
    else if(_direction == "left"){
-     if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4 && col_1-5) {
+     if(col_1 >= 5 && col_1 <= 9) {
       if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true && checkIfX(row_1, col_1-5) == true) {
        board[row_1][col_1] = '6';
        board[row_1][col_1-1] = '6';
@@ -892,7 +914,7 @@ void Board::Ship6() {
 
   }
    else if(_direction == "right"){
-     if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8 && col_1+5 <= 8) {
+     if(col_1 <= 4 && col_1 >= 0) {
       if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true && checkIfX(row_1, col_1+5) == true) {
        board[row_1][col_1] = '6';
        board[row_1][col_1+1] = '6';
@@ -915,13 +937,15 @@ void Board::Ship6() {
    }
     } while( flag == false );
       cout << "Ai Ship 6 placed.\n";
+      Ship5();
   }
   else {
+    Ship5();
     cout << "\nPlace Ship 6:\n";
+
+    do {
     int row_1 = promptRow();
     int col_1 = promptCol();
-    do {
-
     while(checkIfX(row_1, col_1) == false) {
     row_1 = promptRow();
     col_1 = promptCol();
@@ -931,7 +955,7 @@ void Board::Ship6() {
   string _direction = direction();
 
   if(_direction == "up"){
-    if(row_1 >= 0 && row_1-1 >= 0 && row_1-2 >= 0 && row_1-3 >= 0 && row_1-4 >= 0 && row_1-5 >= 0){
+    if(row_1 >= 5 && row_1 <= 8){
       if(checkIfX(row_1-1, col_1) == true && checkIfX(row_1-2, col_1) == true && checkIfX(row_1-3, col_1) == true && checkIfX(row_1-4, col_1) == true && checkIfX(row_1-5, col_1) == true) {
       board[row_1][col_1] = '6';
       board[row_1-1][col_1] = '6';
@@ -953,7 +977,7 @@ void Board::Ship6() {
    }
 
   else if(_direction == "down"){
-   if(row_1+1 <= 8 && row_1+2 <= 8 && row_1+3 <= 8 && row_1+4 <= 8 && row_1+5 <= 8) {
+   if(row_1 <= 3 && row_1 >= 0) {
      if( checkIfX(row_1+1, col_1) == true && checkIfX(row_1+2, col_1) == true && checkIfX(row_1+3, col_1) == true && checkIfX(row_1+4, col_1) == true && checkIfX(row_1+5, col_1) == true) {
       board[row_1][col_1] = '6';
       board[row_1+1][col_1] = '6';
@@ -975,7 +999,7 @@ void Board::Ship6() {
 
   }
    else if(_direction == "left"){
-     if(col_1-1 >= 0 && col_1-2 >= 0 && col_1-3 && col_1-4 && col_1-5) {
+     if(col_1 >= 5 && col_1 <= 9) {
       if(checkIfX(row_1, col_1-1) == true && checkIfX(row_1, col_1-2) == true && checkIfX(row_1, col_1-3) == true && checkIfX(row_1, col_1-4) == true && checkIfX(row_1, col_1-5) == true) {
        board[row_1][col_1] = '6';
        board[row_1][col_1-1] = '6';
@@ -997,7 +1021,7 @@ void Board::Ship6() {
 
   }
    else if(_direction == "right"){
-     if(col_1+1 <= 8 && col_1+2 <= 8 && col_1+3 <= 8 && col_1+4 <= 8 && col_1+5 <= 8) {
+     if(col_1 <= 4 && col_1 >= 0) {
       if(checkIfX(row_1, col_1+1) == true && checkIfX(row_1, col_1+2) == true && checkIfX(row_1, col_1+3) == true && checkIfX(row_1, col_1+4) == true && checkIfX(row_1, col_1+5) == true) {
        board[row_1][col_1] = '6';
        board[row_1][col_1+1] = '6';
@@ -1114,37 +1138,40 @@ int Board::convertCharToInt(char m_col) {
 string Board::direction() {
  string shipDirection;
  for( ; ;)
-{
-  if(m_ifAi == 1){
-    int tempDir = aiRandomDir();
-    if(tempDir == 1) {
-      shipDirection = "up";
-    }
-    else if(tempDir == 2) {
-      shipDirection = "down";
-    }
-    else if(tempDir == 3) {
-      shipDirection = "left";
+  {
+    if(m_ifAi == 1){
+      int tempDir = aiRandomDir();
+      if(tempDir == 1) {
+        shipDirection = "up";
+        break;
+      }
+      else if(tempDir == 2) {
+        shipDirection = "down";
+        break;
+      }
+      else if(tempDir == 3) {
+        shipDirection = "left";
+        break;
+      }
+      else if(tempDir == 4){
+        shipDirection = "right";
+        break;
+      }
     }
     else {
-      shipDirection = "right";
+      cout << "Where would you like to place the rest of your ship?(up, down, left or right): \n";
+   	 cin >> shipDirection;
+   	 if(shipDirection == "up" || shipDirection == "down" || shipDirection == "left" || shipDirection == "right")
+   	 {
+   		 break;
+   	 }
+   	 else
+   	 {
+   		 cout << "Invalid input, enter again" << endl;
+   	 }
     }
-    break;
-  }
-  else {
-    cout << "Where would you like to place the rest of your ship?(up, down, left or right): \n";
- 	 cin >> shipDirection;
- 	 if(shipDirection == "up" || shipDirection == "down" || shipDirection == "left" || shipDirection == "right")
- 	 {
- 		 break;
- 	 }
- 	 else
- 	 {
- 		 cout << "Invalid input, enter again" << endl;
- 	 }
-  }
 
-}
+  }
 	return(shipDirection);
 }
 
@@ -1198,16 +1225,19 @@ bool Board::checkSunk(char shipSize) {
  }
 
 int Board::aiRandomDir() {
-  srand((unsigned) time(0));
+  srand((unsigned)time(NULL));
+  //usleep(500000);
   return((rand() % 4)+1);
 }
 
 int Board::aiRandomRow() {
-  srand((unsigned) time(0));
+  srand((unsigned)time(NULL));
+  //usleep(500000);
   return((rand() % 9)+1);
 }
 
 int Board::aiRandomCol() {
-  srand((unsigned) time(0));
-  return(rand() % 10);
+  srand((unsigned)time(NULL));
+  //usleep(500000);
+  return((rand() % 10));
 }
