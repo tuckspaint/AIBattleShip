@@ -479,6 +479,60 @@ int Executive::aiRandomCol() {
   return(rand() % 10);
 }
 
+bool Executive::attackUp(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]) {
+  for (int i = 1; initHit[0] + i <= 9; i++) {
+      if (hitmiss_2[9-(initHit[0] + i)][initHit[1]] == 'M') {
+        break;
+      }
+      else if (hitmiss_2[9-(initHit[0] + i)][initHit[1]] != 'H') {
+        aiRow = initHit[0] + i;
+        aiCol = initHit[1];
+        return true;
+      }
+  }
+  return false;
+}
+bool Executive::attackRight(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]) {
+  for (int i = 0; initHit[1] + i < 10; i++) {
+      if (hitmiss_2[9-initHit[0]][initHit[1] + i] == 'M') {
+        break;
+      }
+      else if (hitmiss_2[9-initHit[0]][initHit[1] + i] != 'H') {
+        aiRow = initHit[0];
+        aiCol = initHit[1] + i;
+        return true;
+      }
+  }
+  return false;
+}
+bool Executive::attackDown(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]) {
+  for (int i = 9; initHit[0] - i >= 1; i--) {
+      if (hitmiss_2[9-(initHit[0] - i)][initHit[1]] == 'M') {
+        break;
+      }
+      else if (hitmiss_2[9-(initHit[0] - i)][initHit[1]] != 'H') {
+        aiRow = initHit[0] - i;
+        aiCol = initHit[1];
+        return true;
+      }
+  }
+  return false;
+}
+bool Executive::attackLeft(int &aiRow, int &aiCol, int initHit[2], char hitmiss_2[9][10]) {
+  for (int i = 9; initHit[1] - i >= 0; i--) {
+      if (hitmiss_2[9-initHit[0]][initHit[1] - i] == 'M') {
+        break;
+      }
+      else if (hitmiss_2[9-initHit[0]][initHit[1] - i] != 'H') {
+        aiRow = initHit[0];
+        aiCol = initHit[1] - i;
+        return true;
+      }
+  }
+  return false;
+}
+
+
 void Executive::Printframe(char board[9][10], int milliSec) {
     cout << "\x1B[2J\x1B[H";
     
