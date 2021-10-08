@@ -96,7 +96,7 @@ if(m_ifAi == 1) {
   do{
 
   do{
-    row_1 = 9-aiRandomRow();
+    row_1 = aiRandomRow();
     col_1 = aiRandomCol();
    }while(checkIfX(row_1, col_1) == false);
 
@@ -235,11 +235,11 @@ void Board::Ship3() {
   int col_1;
   bool flag = true;
   if(m_ifAi == 1) {
-    row_1 = 9-aiRandomRow();
+    row_1 = aiRandomRow();
     col_1 = aiRandomCol();
     do {
       while(checkIfX(row_1, col_1) == false) {
-      row_1 = 9-aiRandomRow();
+      row_1 = aiRandomRow();
       col_1 = aiRandomCol();
      }
 
@@ -427,11 +427,11 @@ void Board::Ship4() {
   bool flag = true;
   if(m_ifAi == 1)
   {
-    row_1 = 9-aiRandomRow();
+    row_1 = aiRandomRow();
     col_1 = aiRandomCol();
     do {
       while(checkIfX(row_1, col_1) == false) {
-      row_1 = 9-aiRandomRow();
+      row_1 = aiRandomRow();
       col_1 = aiRandomCol();
      }
 
@@ -1118,17 +1118,18 @@ string Board::direction() {
   if(m_ifAi == 1){
     int tempDir = aiRandomDir();
     if(tempDir == 1) {
-      shipDirection == "up";
+      shipDirection = "up";
     }
     else if(tempDir == 2) {
-      shipDirection == "down";
+      shipDirection = "down";
     }
     else if(tempDir == 3) {
-      shipDirection == "left";
+      shipDirection = "left";
     }
     else {
-      shipDirection == "right";
+      shipDirection = "right";
     }
+    break;
   }
   else {
     cout << "Where would you like to place the rest of your ship?(up, down, left or right): \n";
@@ -1208,5 +1209,5 @@ int Board::aiRandomRow() {
 
 int Board::aiRandomCol() {
   srand((unsigned) time(0));
-  return((rand() % 10)+1);
+  return(rand() % 10);
 }
