@@ -33,6 +33,7 @@ int aiCol;
 int initHit[2] = {11, 11}; //initHit {11,11} means a ship has not been hit, anything else is the location of the first hit on the most recently hit ship
 char tempSize; //for checkSunk
 	
+//Prompt for the user to ask if they want to play against a user or an AI
 while(1)
 {
     cout << "Which game mode would you like to play with? (PvP or PvAI):";
@@ -64,6 +65,7 @@ while(1)
     }
 
 }
+
 for( ; ; )
 {
 	cout << "How many ships would you like to play with? (enter 1-6):\n";
@@ -164,14 +166,14 @@ do {
             if(board_2.checkBoard(row,new_char) == true && hitmiss_1[9-row][new_char] != 'H')
             {
                 //cout << "You hit their ship\n";
-		Playhit(150);
-		std::cout << "\x1B[2J\x1B[H";
+		        Playhit(150);
+		        std::cout << "\x1B[2J\x1B[H";
                 hitmiss_1[9-row][new_char] = 'H';
                 board_2.board[9-row][new_char] = 'H';
                 hitcount++;
                 if(winningCondition(numShips) == hitcount) {
                     //cout << "Congratulations Player 1! You win!\n";
-		    Playp1win(100, 1);
+		            Playp1win(100, 1);
                     return;
                 }
             }
@@ -181,8 +183,8 @@ do {
 
             else {
                 //cout << "you missed their ship.\n";
-		Playmiss(100);
-		std::cout << "\x1B[2J\x1B[H";
+		        Playmiss(100);
+		        std::cout << "\x1B[2J\x1B[H";
                 hitmiss_1[9-row][new_char] = 'M';
                 board_2.board[9-row][new_char] = 'M';
             }
@@ -193,14 +195,14 @@ do {
             if(board_1.checkBoard(row,new_char) == true && hitmiss_2[9-row][new_char] != 'H')
             {
                 //cout << "You hit their ship\n";
-		Playhit(150);
-		std::cout << "\x1B[2J\x1B[H";
+		        Playhit(150);
+		        std::cout << "\x1B[2J\x1B[H";
                 hitmiss_2[9-row][new_char] = 'H';
                 board_1.board[9-row][new_char] = 'H';
                 hitcount2++;
                 if(winningCondition(numShips) == hitcount2) {
                     //cout << "Congratulations Player 2! You win!\n";
-		    Playp2win(100, 1);
+		            Playp2win(100, 1);
                     return;
                 }
             }
@@ -210,14 +212,16 @@ do {
 
             else {
                 //cout << "you missed their ship.\n";
-		Playmiss(100);
-		std::cout << "\x1B[2J\x1B[H";
+		        Playmiss(100);
+		        std::cout << "\x1B[2J\x1B[H";
                 hitmiss_2[9-row][new_char] = 'M';
                 board_1.board[9-row][new_char] = 'M';
             }
         }
 
+        //If the player is the AI run this code
         if(currentPlayer == 3) {
+            //If easy mode is chosen run this logic
             if(modeChosen == 1)
             {
                 //put code for easy move in here
@@ -231,8 +235,8 @@ do {
                         cout << "The AI hit a ship!\n";
                         if(winningCondition(numShips) == hitcount2) {
                         //cout << "Congratulations the AI won!\n";
-			Playp2win(100,1);
-                        return;
+			                Playp2win(100,1);
+                            return;
                         }
                 }
                 else if(hitmiss_2[9-aiRow][aiCol] == 'H' || hitmiss_2[9-aiRow][aiCol] == 'M') {
@@ -244,6 +248,7 @@ do {
                     board_1.board[9-aiRow][aiCol] = 'M';
                 }
             }
+            //If medium mode is chosen run this logic
             else if(modeChosen == 2)
             {
                 //put code for medium move in here
@@ -311,6 +316,7 @@ do {
 
             
             }
+            //If hard mode is chosen run this code 
             else 
             {
                 bool changed = 0;
@@ -322,7 +328,7 @@ do {
                         {
                             cout << "The AI hit your ship!\n";
                             board_1.board[i][j] = 'H';
-			    hitmiss_2[i][j] = 'H';
+			                hitmiss_2[i][j] = 'H';
                             changed = 1;
                             hitcount2++;
                             break;
@@ -346,7 +352,7 @@ do {
             if(winningCondition(numShips) == hitcount2)
             {
                 //cout << "Congratulations the robot wins!\n";
-		Playp2win(100, 1);
+		        Playp2win(100, 1);
                 return;
             }
         }
@@ -357,7 +363,7 @@ do {
     cout << "Press Enter to continue:";
     std::cin.get();
     playerChange();
-    }
+}
 
     //choice 3
     if(choice == 3) {
@@ -443,34 +449,6 @@ void Executive::playerChange(){
         }
         std::cout << "\x1B[2J\x1B[H";
     }
-}
-
-bool Executive::hardMove(Board board1)
-{
-    for(int i=0; i<9; i++)
-    {
-        for(int j=0; j<10; j++)
-        {
-            if(board1.board[i][j] == 'S')
-            {
-                cout << "Changed!\n";
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-//Decide based on the logic whether it was a hit or not and return true if it is a hit
-bool Executive::mediumMove(Board board1)
-{
-    return true;
-}
-
-//Decide based on the logic whether it was a hit or not and return true if it is a hit
-bool Executive::easyMove(Board board1)
-{
-    return true;
 }
 
 int Executive::aiRandomRow() {

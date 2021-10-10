@@ -50,10 +50,6 @@ class Executive {
     * @return none
     */
     void playerChange();
-
-    bool hardMove(Board board1);
-    bool easyMove(Board board1);
-    bool mediumMove(Board board1);
     
     void Printframe(char board[9][10], int milliSec); 
     void Playmiss(int msPerFrame);
