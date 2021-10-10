@@ -158,7 +158,7 @@ public:
     * @return true if there is a ship, false if not
     */
     bool checkBoard(int m_row, int m_col);
-////////////////////////////////////////////////Project 2 new stuff
+
     /*
     * @pre none
     * @post checks if the ship is on the board
@@ -167,9 +167,36 @@ public:
     */
     bool checkSunk(char shipSize);
     
+    /*
+    * @pre none
+    * @post Checks the amount of ships being played and runs code off of that
+    * @param none
+    * @return none
+    */
     void runShipBoard();
+    
+    /*
+    * @pre none
+    * @post A random number generator for choosing the AI's row
+    * @param none
+    * @return A number 1-9 for each row
+    */
     int aiRandomRow();
+    
+    /*
+    * @pre none
+    * @post A random number generator for choosing the AI's col
+    * @param none
+    * @return A number 1-10 for each column
+    */
     int aiRandomCol();
+    
+    /*
+    * @pre none
+    * @post Randomly generates a direction for placing the Ai's ship
+    * @param none
+    * @return A number 1-4 each representing a cardinal direction
+    */
     int aiRandomDir();
     
 
